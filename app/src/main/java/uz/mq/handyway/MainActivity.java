@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.GridLayout;
+import android.widget.GridView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,6 +20,15 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
+
+import uz.mq.handyway.Adapters.CategoryAdapter;
+import uz.mq.handyway.Adapters.CategorysGirdAdapter;
+import uz.mq.handyway.Models.CategoryModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,9 +44,30 @@ public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawer;
     NavigationView navView;
+    GridView categorysGird;
     private void initViews(){
         drawer = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
+        categorysGird = (GridView) findViewById(R.id.categorysGird);
+
+        ArrayList<CategoryModel> testData = new ArrayList<>();
+        testData.add(new CategoryModel(0, "Salqin ichimliklar"));
+        testData.add(new CategoryModel(1, "Sabzavodlar"));
+        testData.add(new CategoryModel(2, "Non maxsulotlari"));
+        testData.add(new CategoryModel(3, "Sut maxsulotlari"));
+        testData.add(new CategoryModel(4, "Kiyim kechak"));
+        testData.add(new CategoryModel(5, "Salqin ichimliklar"));
+        testData.add(new CategoryModel(6, "Sabzavodlar"));
+        testData.add(new CategoryModel(7, "Non maxsulotlari"));
+        testData.add(new CategoryModel(8, "Sut maxsulotlari"));
+        testData.add(new CategoryModel(9, "Kiyim kechak"));
+        testData.add(new CategoryModel(10, "Salqin ichimliklar"));
+        testData.add(new CategoryModel(11, "Sabzavodlar"));
+        testData.add(new CategoryModel(12, "Non maxsulotlari"));
+        testData.add(new CategoryModel(13, "Sut maxsulotlari"));
+        testData.add(new CategoryModel(14, "Kiyim kechak"));
+        CategorysGirdAdapter adapter = new CategorysGirdAdapter(MainActivity.this, testData);
+        categorysGird.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
