@@ -8,11 +8,11 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="profile">Профиль</string>
-    <string name="orders">Мои покупки</string>
-    <string name="return_">Возврат</string>
-    <string name="support">Тех. поддержка</string>
-    <string name="main">Главная</string>
-    <string name="cart">Корзина</string>
-    <string name="exit">Выйти из профиля</string>
+    <string name="profile">Profil</string>
+    <string name="orders">Mening haridlarim</string>
+    <string name="return_">Qaytarish</string>
+    <string name="support">Qollab quvatlash</string>
+    <string name="main">Asosiy</string>
+    <string name="cart">Savat</string>
+    <string name="exit">Profildan chiqish</string>
 </resources>
