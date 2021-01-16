@@ -15,4 +15,7 @@
     <string name="main">Asosiy</string>
     <string name="cart">Savat</string>
     <string name="exit">Profildan chiqish</string>
+    <string name="search">Qidiruv</string>
+    <string name="about">Dastur haqida</string>
+
 </resources>

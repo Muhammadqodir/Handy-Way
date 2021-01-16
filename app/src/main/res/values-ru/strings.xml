@@ -15,4 +15,6 @@
     <string name="main">Главная</string>
     <string name="cart">Корзина</string>
     <string name="exit">Выйти из профиля</string>
+    <string name="search">Поиск</string>
+    <string name="about">О приложении</string>
 </resources>

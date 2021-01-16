@@ -13,11 +13,6 @@
             android:id="@+id/nav_cart"
             android:icon="@drawable/ic_icons8_shopping_cart"
             android:title="@string/cart" />
-
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_icons8_male_user"
-            android:title="@string/profile" />
         <item
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_icons8_list"
@@ -28,15 +23,31 @@
             android:icon="@drawable/ic_icons8_return_purchase"
             android:title="@string/return_" />
 
-        <item
-            android:id="@+id/nav_support"
-            android:icon="@drawable/ic_icons8_online_support_1"
-            android:title="@string/support" />
-
-        <item
-            android:id="@+id/nav_exit"
-            android:icon="@drawable/ic_icons8_exit"
-            android:title="@string/ex" />
     </group>
+
+    <item android:title="@string/profile">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_icons8_male_user"
+                android:title="@string/profile" />
+
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_icons8_exit"
+                android:title="@string/exit" />
+        </menu>
+    </item>
+
+    <item android:title="@string/about">
+        <menu>
+            <item
+                android:id="@+id/nav_support"
+                android:icon="@drawable/ic_icons8_online_support_1"
+                android:title="@string/support" />
+
+        </menu>
+    </item>
+
 
 </menu>

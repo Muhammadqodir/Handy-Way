@@ -1,6 +1,9 @@
 package uz.mq.handyway;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -24,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setActionBar();
+        initViews();
+    }
+
+    DrawerLayout drawer;
+    NavigationView navView;
+    private void initViews(){
+        drawer = findViewById(R.id.drawer_layout);
+        navView = findViewById(R.id.nav_view);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        setActionBar();
-
     }
 
     private void setActionBar(){
@@ -48,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home){
+            drawer.openDrawer(Gravity.LEFT);
+        }
         return true;
     }
 
