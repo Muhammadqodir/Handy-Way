@@ -18,4 +18,14 @@
     <string name="search">Qidiruv</string>
     <string name="about">Dastur haqida</string>
 
+    <string name="fio">F.I.SH.</string>
+    <string name="inn">INN</string>
+    <string name="phone">Telefon raqam:</string>
+    <string name="password">Пароль</string>
+    <string name="buy">Купить</string>
+    <string name="addToCart">Добавить в конзину</string>
+    <string name="login">Войти</string>
+    <string name="noInternetConnection">Internet bilan aloqa yoq!</string>
+    <string name="blockedUser">Sizning profilingiz blocklangan!<br/>Batafsil malumot olish uchun administratirlar bilan boglaning.</string>
+
 </resources>

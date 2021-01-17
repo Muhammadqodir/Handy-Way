@@ -18,4 +18,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="LogIn" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/coloWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/coloWhite</item>
+        <item name="fontFamily">@font/font_l</item>
+    </style>
+
 </resources>

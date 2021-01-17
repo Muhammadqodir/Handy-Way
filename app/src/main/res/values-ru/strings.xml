@@ -17,4 +17,14 @@
     <string name="exit">Выйти из профиля</string>
     <string name="search">Поиск</string>
     <string name="about">О приложении</string>
+
+    <string name="fio">Ф.И.О.</string>
+    <string name="inn">ИНН</string>
+    <string name="phone">Номер телефона</string>
+    <string name="password">Пароль</string>
+    <string name="buy">Купить</string>
+    <string name="addToCart">Добавить в конзину</string>
+    <string name="login">Войти</string>
+    <string name="noInternetConnection">Не соеденение с интернетом!</string>
+    <string name="blockedUser">Ваш профиль заблокирован!<br/>Свяжитесь с администраторами для получения допольнительной информации.</string>
 </resources>
