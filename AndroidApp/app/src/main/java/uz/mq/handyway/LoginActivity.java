@@ -150,6 +150,12 @@ public class LoginActivity extends AppCompatActivity {
                                         LoginActivity.this.finish();
                                     }else{
                                         ((LinearLayout) findViewById(R.id.blockedUser)).setVisibility(View.VISIBLE);
+                                        ((Button) findViewById(R.id.btnSupport)).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Utils.startSupportIntent(context);
+                                            }
+                                        });
                                     }
                                     break;
                                 case 2:

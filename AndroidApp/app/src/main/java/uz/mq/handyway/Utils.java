@@ -1,11 +1,14 @@
 package uz.mq.handyway;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +91,11 @@ public class Utils {
     static String getUserToken(Context ctx){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         return preferences.getString("token", EMPTY);
+    }
+
+    public static void startSupportIntent(Context context){
+        Intent tlgSupport = new Intent(Intent.ACTION_VIEW, Uri.parse("https://telegram.me/handyway"));
+        ((Activity) context).startActivity(tlgSupport);
     }
 
     public static boolean isOnline(Context ctx) {
