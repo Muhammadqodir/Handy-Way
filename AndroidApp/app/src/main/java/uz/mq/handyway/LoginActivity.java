@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.sql.Time;
 
 public class LoginActivity extends AppCompatActivity {
@@ -79,11 +81,17 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Utils.setLogin(context, true);
-                                Utils.setUserToken(context, (String) response.getRes());
-                                ((LinearLayout) findViewById(R.id.login)).setVisibility(View.GONE);
-                                ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
-                                ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
-                                runApp();
+                                JSONObject userData = (JSONObject) response.getRes();
+                                try {
+                                    Utils.setUserToken(context, userData.getString("token"));
+                                    Utils.setUserData(context, userData.getString("name"), userData.getString("phone_number"));
+                                    ((LinearLayout) findViewById(R.id.login)).setVisibility(View.GONE);
+                                    ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
+                                    ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                                    runApp();
+                                }catch (Exception e){
+                                    Utils.showErrorDialog(context, e.getMessage(), getLayoutInflater());
+                                }
                             }
                         });
                     }else{

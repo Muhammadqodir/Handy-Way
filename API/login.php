@@ -13,14 +13,16 @@
 	if ($user_id > -1) {
 		$token = bin2hex(random_bytes(16));
 		newUserAuth($db, $token, $ip, $location, $date_time, $device, $user_id);
+		$user_data = getUserData($db, getUserId($db, $token));
 		$res["code"] = 1;
 		$res["message"] = "_OK_";
-		$res["token"] = $token;
+		$user_data["token"] = $token;
+		$res["user_data"] = $user_data;
 		echo json_encode($res);
 	}else{
 		$res["code"] = 4;
 		$res["message"] = "_invalid_pass_";
-		$res["token"] = "null";
+		$res["user_data"] = array();
 		echo json_encode($res);
 	}
 $db->close();

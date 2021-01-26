@@ -46,7 +46,7 @@ public class HandyWayAPI {
             String r_body = response.body().string();
             Log.i("ResponseBody", r_body);
             JSONObject json = new JSONObject(r_body);
-            return new APIResponse(json.getInt("code"), json.getString("message"), json.get("token"));
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.getJSONObject("user_data"));
         }catch (Exception e){
             return new APIResponse(0, e.getMessage(), null);
         }

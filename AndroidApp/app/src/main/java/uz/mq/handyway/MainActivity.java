@@ -1,6 +1,7 @@
 package uz.mq.handyway;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,6 +17,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -33,7 +36,7 @@ import uz.mq.handyway.Adapters.CategoryAdapter;
 import uz.mq.handyway.Adapters.CategorysGirdAdapter;
 import uz.mq.handyway.Models.CategoryModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     HandyWayAPI handyWayAPI;
     Context context;
@@ -57,9 +60,11 @@ public class MainActivity extends AppCompatActivity {
     private void initViews(){
         drawer = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
+        navView.setNavigationItemSelectedListener(this);
         categorysGird = (GridView) findViewById(R.id.categorysGird);
-
-
+        View navHeader = navView.getHeaderView(0);
+        ((TextView) navHeader.findViewById(R.id.tvUserName)).setText(Utils.getUserData(context, "name"));
+        ((TextView) navHeader.findViewById(R.id.tvUserTel)).setText(Utils.getUserData(context, "tel"));
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +99,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     break;
                                 case 2:
-                                    Utils.setLogin(context, false);
-                                    initViews();
+                                    Utils.logOut(context);
                                     break;
                             }
                         }
@@ -130,7 +134,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_exit:
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.exit)
+                        .setMessage(R.string.confirm_exit)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Utils.logOut(context);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+                break;
+        }
+        drawer.close();
+        return false;
+    }
 
     private void setActionBar(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

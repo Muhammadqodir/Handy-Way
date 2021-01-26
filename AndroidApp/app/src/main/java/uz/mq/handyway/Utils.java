@@ -119,4 +119,11 @@ public class Utils {
         return isAvailable;
     }
 
+    public static void logOut(Context context){
+        Utils.setLogin(context, false);
+        ((Activity) context).startActivity(new Intent(context, LoginActivity.class));
+        ((Activity) context).finish();
+        ((Activity) context).finishAffinity();
+    }
+
 }
