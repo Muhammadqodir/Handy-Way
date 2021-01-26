@@ -1,6 +1,7 @@
 <?php
 	include "db_master.php";
 
-	init_db();
+	$db = init_db();
 	echo "_OK_";
+	$db->close();
 ?>

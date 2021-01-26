@@ -12,5 +12,30 @@ function init_db()
 	return $conn;
 }
 
+function getTable($db, $table)
+{
+	$sql = "SELECT * FROM `$table`";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
+function getUserId($db, $token)
+{
+	$sql = "SELECT * FROM `users_session` WHERE `token` = $token";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc
+		require $row["user_id"];
+	}else{
+		return "_invalid_token_";
+	}
+}
+
+function isActiveUser($db, $id)
+{
+	$sql = "SELECT * FROM `users_session` WHERE `id` = $id AND `is_active` = 1";
+	$q_res = $db->query($sql);
+	return $q_res->num_rows>0;
+}
 
 ?>
