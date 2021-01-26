@@ -31,11 +31,14 @@
     <string name="sendToDev">Отправить разработчикам</string>
     <string name="blockedUser">Ваш профиль заблокирован! <br /> Свяжитесь с администраторами для получения допольнительной информации.</string>
 
-
     <string name="invalid_tel_pass">Неверный номар телефона или пароль</string>
     <string name="loading">Загрузка данных...</string>
     <string name="empty">Нет данных!</string>
     <string name="confirm_exit">Подтвердите выход из профилья</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
+    <string name="adres">Адрес</string>
+    <string name="phone_num">Номер телефона</string>
+    <string name="landmark">Ориентир</string>
+    <string name="wholesaler">Оптовик</string>
 </resources>

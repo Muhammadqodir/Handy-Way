@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setNegativeButton(R.string.cancel, null)
                         .show();
                 break;
+            case R.id.nav_profile:
+                startActivity(new Intent(context, ProfileActivity.class));
+                break;
         }
         drawer.close();
         return false;
