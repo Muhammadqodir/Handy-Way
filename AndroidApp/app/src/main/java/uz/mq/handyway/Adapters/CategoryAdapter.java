@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,18 +25,14 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.MyVie
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
         public CardView card;
-        public ImageView[] previews = new ImageView[6];
+        public ImageView ivPreview;
 
         public MyViewHolder(View view) {
             super(view);
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             card = (CardView) view.findViewById(R.id.card);
-            previews[0] = (ImageView) view.findViewById(R.id.ivPre_0);
-            previews[1] = (ImageView) view.findViewById(R.id.ivPre_1);
-            previews[2] = (ImageView) view.findViewById(R.id.ivPre_2);
-            previews[3] = (ImageView) view.findViewById(R.id.ivPre_3);
-            previews[4] = (ImageView) view.findViewById(R.id.ivPre_4);
-            previews[5] = (ImageView) view.findViewById(R.id.ivPre_5);
+            ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
+
         }
     }
 

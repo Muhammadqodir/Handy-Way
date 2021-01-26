@@ -26,7 +26,7 @@
 
 	$y = 0+$padding;
 	while ($i <= $size) {
-		$x = 200-$padding;
+		$x = 200;
 		for ($j=0; $j < $i; $j++) { 
 			imagecopymerge($dest, $pics[$image], $x-$w, $y, 0, 0, $w, $h, 100);
 			$image += 1;

@@ -20,6 +20,48 @@ function getTable($db, $table)
 	return $q_res;
 }
 
+function getCanBuyGoodsCategorys($db, $shop_category)
+{
+	$sql = "SELECT * FROM `main_canbuy` WHERE `shopCategory_id` = '$shop_category'";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		$ids = json_decode(str_replace("'", "", $row["goodsCategory"]), true);
+		$sql = "SELECT * FROM `main_goodscategory` WHERE";
+		$first = true;
+		foreach ($ids as $id) {
+			if ($first) {
+				$sql .= " `id` = $id";
+				$first = false;
+			}else{
+				$sql .= " OR `id` = $id";
+			}
+		}
+		$res = array();
+		$q_res = $db->query($sql);
+		if ($q_res->num_rows > 0) {
+			while ($row = $q_res->fetch_assoc()) {
+				$res[] = $row;
+			}
+		}
+		return $res;
+	}else{
+		return array();
+	}
+}
+
+function getUserData($db, $user_id)
+{
+	$sql = "SELECT * FROM `main_shop` WHERE `id` = '$user_id'";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		return $row;
+	}else{
+		return "_invalid_user_id_";
+	}
+}
+
 function getUserId($db, $token)
 {
 	$sql = "SELECT * FROM `users_session` WHERE `token` = '$token'";

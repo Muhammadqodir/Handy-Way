@@ -34,7 +34,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    //ok http
+    //Okhttp
     implementation "com.squareup.okhttp3:okhttp:4.4.0"
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

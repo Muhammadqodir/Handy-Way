@@ -83,6 +83,16 @@ public class Utils {
         preferences.edit().putBoolean("isLogin", val).apply();
     }
 
+    static String getUserData(Context context, String name){
+        SharedPreferences preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        return preferences.getString(name, EMPTY);
+    }
+
+    static void setUserData(Context context, String name, String tel){
+        SharedPreferences preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        preferences.edit().putString("name", name).putString("tel", tel).apply();
+    }
+
     static void setUserToken(Context ctx, String token){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         preferences.edit().putString("token", token).apply();

@@ -4,7 +4,10 @@ package uz.mq.handyway;
 import android.util.Log;
 import android.view.textclassifier.ConversationActions;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.FormBody;
 import okhttp3.MultipartBody;
@@ -12,6 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import uz.mq.handyway.Models.CategoryModel;
 
 public class HandyWayAPI {
     private static String BASE_URL = "https://handyway.uz/API/";
@@ -76,7 +80,7 @@ public class HandyWayAPI {
                 .addFormDataPart("token", token)
                 .build();
         Request request = new Request.Builder()
-                .url(BASE_URL+"check_is_active.php")
+                .url(BASE_URL+"get_categorys.php")
                 .post(body)
                 .build();
         try {
@@ -84,7 +88,13 @@ public class HandyWayAPI {
             String r_body = response.body().string();
             Log.i("ResponseBody", r_body);
             JSONObject json = new JSONObject(r_body);
-            return new APIResponse(json.getInt("code"), json.getString("message"), json.getBoolean("res"));
+            JSONArray list = json.getJSONArray("res");
+            ArrayList<CategoryModel> models = new ArrayList<>();
+            for (int i=0; i<list.length(); i++){
+                JSONObject item = list.getJSONObject(i);
+                models.add(new CategoryModel(item.getInt("id"), item.getString("name")));
+            }
+            return new APIResponse(json.getInt("code"), json.getString("message"), models);
         }catch (Exception e){
             return new APIResponse(0, e.getMessage(), null);
         }

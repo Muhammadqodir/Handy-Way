@@ -53,29 +53,12 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
     NavigationView navView;
     GridView categorysGird;
+    CategorysGirdAdapter adapter;
     private void initViews(){
         drawer = findViewById(R.id.drawer_layout);
         navView = findViewById(R.id.nav_view);
         categorysGird = (GridView) findViewById(R.id.categorysGird);
 
-        ArrayList<CategoryModel> testData = new ArrayList<>();
-        testData.add(new CategoryModel(0, "Salqin ichimliklar"));
-        testData.add(new CategoryModel(1, "Sabzavodlar"));
-        testData.add(new CategoryModel(2, "Non maxsulotlari"));
-        testData.add(new CategoryModel(3, "Sut maxsulotlari"));
-        testData.add(new CategoryModel(4, "Kiyim kechak"));
-        testData.add(new CategoryModel(5, "Salqin ichimliklar"));
-        testData.add(new CategoryModel(6, "Sabzavodlar"));
-        testData.add(new CategoryModel(7, "Non maxsulotlari"));
-        testData.add(new CategoryModel(8, "Sut maxsulotlari"));
-        testData.add(new CategoryModel(9, "Kiyim kechak"));
-        testData.add(new CategoryModel(10, "Salqin ichimliklar"));
-        testData.add(new CategoryModel(11, "Sabzavodlar"));
-        testData.add(new CategoryModel(12, "Non maxsulotlari"));
-        testData.add(new CategoryModel(13, "Sut maxsulotlari"));
-        testData.add(new CategoryModel(14, "Kiyim kechak"));
-        CategorysGirdAdapter adapter = new CategorysGirdAdapter(MainActivity.this, testData);
-        categorysGird.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        fillList();
     }
 
     private void fillList(){
@@ -92,7 +76,40 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                APIResponse response = handyWayAPI
+                final APIResponse response = handyWayAPI.getCategorys();
+                if (response.getCode() > 0){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            switch (response.getCode()){
+                                case 1:
+                                    isLoading(false);
+                                    ArrayList<CategoryModel> models = (ArrayList<CategoryModel>) response.getRes();
+                                    if (models.size() > 0){
+                                        isEmpty(false);
+                                        adapter = new CategorysGirdAdapter(MainActivity.this, models);
+                                        categorysGird.setAdapter(adapter);
+                                    }else{
+                                        isEmpty(true);
+                                    }
+                                    break;
+                                case 2:
+                                    Utils.setLogin(context, false);
+                                    initViews();
+                                    break;
+                            }
+                        }
+                    });
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isLoading(false);
+                            isEmpty(true);
+                            Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                        }
+                    });
+                }
             }
         }).start();
     }
