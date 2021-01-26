@@ -38,4 +38,22 @@ function isActiveUser($db, $id)
 	return $q_res->num_rows>0;
 }
 
+function chekUserAuth($db, $tel, $password)
+{
+	$sql = "SELECT * FROM `main_shop` WHERE `phone_number` = '$tel' AND `password` = '$password'"
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc
+		require $row["id"];
+	}else{
+		return -1;
+	}
+}
+
+function newUserAuth($db, $token, $ip, $location, $date, $device, $user_id)
+{
+	$sql = "INSERT INTO `users_session` (`id`, `user_id`, `token`, `ip`, `date`, `device`) VALUES (NULL, '$user_id', '$token', '$ip', '$date', '$device');";
+	$q_res = $db->query($sql);
+}
+
 ?>
