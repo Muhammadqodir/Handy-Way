@@ -33,4 +33,6 @@
 
 
     <string name="invalid_tel_pass">Неверный номар телефона или пароль</string>
+    <string name="loading">Загрузка данных...</string>
+    <string name="empty">Нет данных!</string>
 </resources>

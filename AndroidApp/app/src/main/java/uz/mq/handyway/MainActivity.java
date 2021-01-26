@@ -1,5 +1,6 @@
 package uz.mq.handyway;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,14 +35,19 @@ import uz.mq.handyway.Models.CategoryModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    HandyWayAPI handyWayAPI;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context = this;
+        handyWayAPI = new HandyWayAPI(Utils.getUserToken(context));
         setActionBar();
         initViews();
+
     }
 
     DrawerLayout drawer;
@@ -78,6 +86,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void fillList(){
+        isLoading(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                APIResponse response = handyWayAPI
+            }
+        }).start();
+    }
+
+    private void isLoading(boolean val){
+        if (val){
+            ((LinearLayout) findViewById(R.id.llLoading)).setVisibility(View.VISIBLE);
+        }else {
+            ((LinearLayout) findViewById(R.id.llLoading)).setVisibility(View.GONE);
+        }
+    }
+
+    private void isEmpty(boolean val){
+        if (val){
+            ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.VISIBLE);
+        }else {
+            ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.GONE);
+        }
+    }
+
+
 
     private void setActionBar(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

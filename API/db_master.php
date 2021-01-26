@@ -39,6 +39,7 @@ function isActiveUser($db, $id)
 	return $q_res->num_rows>0;
 }
 
+
 function chekUserAuth($db, $tel, $password)
 {
 	$sql = "SELECT * FROM `main_shop` WHERE `phone_number` = '$tel' AND `password` = '$password'";
@@ -55,6 +56,13 @@ function newUserAuth($db, $token, $ip, $location, $date, $device, $user_id)
 {
 	$sql = "INSERT INTO `users_session` (`id`, `user_id`, `token`, `ip`, `date`, `device`) VALUES (NULL, '$user_id', '$token', '$ip', '$date', '$device');";
 	$q_res = $db->query($sql);
+}
+
+function getCategoryImages($db, $category_id, $limit)
+{
+	$sql = "SELECT `photo` FROM `main_good` WHERE `category_id` = $category_id ORDER BY RAND() LIMIT $limit;";
+	$q_res = $q_res = $db->query($sql);
+	return $q_res;
 }
 
 

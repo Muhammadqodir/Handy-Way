@@ -70,4 +70,25 @@ public class HandyWayAPI {
     }
 
 
+    public APIResponse getCategorys(){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"check_is_active.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.getBoolean("res"));
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+
 }

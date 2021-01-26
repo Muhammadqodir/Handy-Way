@@ -23,4 +23,5 @@
 		$res["token"] = "null";
 		echo json_encode($res);
 	}
+$db->close();
 ?>
