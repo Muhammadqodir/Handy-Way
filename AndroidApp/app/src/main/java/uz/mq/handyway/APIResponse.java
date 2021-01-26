@@ -1,37 +1,37 @@
 package uz.mq.handyway;
 
 public class APIResponse {
-    boolean isSuccess;
-    Object data;
-    String error;
+    int code;
+    String message;
+    Object res;
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public APIResponse(int code, String message, Object res) {
+        this.code = code;
+        this.message = message;
+        this.res = res;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public int getCode() {
+        return code;
     }
 
-    public Object getData() {
-        return data;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public String getMessage() {
+        return message;
     }
 
-    public String getError() {
-        return error;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public Object getRes() {
+        return res;
     }
 
-    public APIResponse(boolean isSuccess, Object data, String error) {
-        this.isSuccess = isSuccess;
-        this.data = data;
-        this.error = error;
+    public void setRes(Object res) {
+        this.res = res;
     }
 }

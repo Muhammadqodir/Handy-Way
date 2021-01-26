@@ -9,7 +9,7 @@
 	$date_time = date("d-m-Y h:i:sa");
 	$res = array();
 	$db = init_db();
-	$user_id = chekUserAuth($db, $tel, $password)
+	$user_id = chekUserAuth($db, $tel, $password);
 	if ($user_id > -1) {
 		$token = bin2hex(random_bytes(16));
 		newUserAuth($db, $token, $ip, $location, $date, $device, $user_id);

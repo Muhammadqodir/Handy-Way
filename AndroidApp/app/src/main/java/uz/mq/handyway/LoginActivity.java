@@ -8,19 +8,25 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.sql.Time;
 
 public class LoginActivity extends AppCompatActivity {
     Context context;
+    HandyWayAPI handyWayAPI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setActionBar();
         context = LoginActivity.this;
+        initViews();
     }
 
     private void initViews(){
@@ -45,9 +51,59 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         ((LinearLayout) findViewById(R.id.login)).setVisibility(View.VISIBLE);
-
+                        ((Button) findViewById(R.id.btnLogin)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                login();
+                            }
+                        });
                     }
                 });
+            }
+        }).start();
+    }
+
+    private void login(){
+        ((Button) findViewById(R.id.btnLogin)).setVisibility(View.GONE);
+        ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.VISIBLE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                handyWayAPI = new HandyWayAPI("");
+                String tel = ((EditText) findViewById(R.id.etTel)).getText().toString();
+                String pass = ((EditText) findViewById(R.id.etPass)).getText().toString();
+                final APIResponse response = handyWayAPI.logIn(tel, pass);
+                if (response.getCode() > 0){
+                    if (response.getCode() == 1){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Utils.setLogin(context, true);
+                                Utils.setUserToken(context, (String) response.getRes());
+                                ((LinearLayout) findViewById(R.id.login)).setVisibility(View.GONE);
+                                runApp();
+                            }
+                        });
+                    }else{
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
+                                ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                                Toast.makeText(context, R.string.invalid_tel_pass, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
+                            ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                            Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                        }
+                    });
+                }
             }
         }).start();
     }
@@ -79,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(200);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

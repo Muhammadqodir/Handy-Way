@@ -6,10 +6,60 @@ import android.graphics.Color;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.net.URLEncoder;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class Utils {
 
     public static String EMPTY = "empty";
+
+    public static void showErrorDialog(final Context context, final String error, LayoutInflater inflater){
+        final BottomSheetDialog bottomSheerDialog = new BottomSheetDialog(context, R.style.SheetDialog);
+        View parentView = inflater.inflate(R.layout.error_dialog ,null);
+
+        ((TextView) parentView.findViewById(R.id.tvError)).setText(error);
+        ((Button) parentView.findViewById(R.id.btnSendToDev)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendToDev(context.toString()+"\n"+error);
+                bottomSheerDialog.dismiss();
+            }
+        });
+        bottomSheerDialog.setCancelable(true);
+        bottomSheerDialog.setContentView(parentView);
+        bottomSheerDialog.show();
+    }
+
+
+    public static void sendToDev(String message){
+        try {
+            final String url = "https://api.telegram.org/bot1564780465:AAEwDdi0gCb8Lk-Tl_Hm1Xh58reKWQK5kFU/sendMessage?chat_id=365867849&text="+ URLEncoder.encode(message, "utf-8");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url(url).build();
+                    try {
+                        client.newCall(request).execute();
+                    }catch (Exception e){
+                        Log.e("sendToDev", e.getLocalizedMessage());
+                    }
+                }
+            }).start();
+        }catch (Exception e){
+            Log.e("sendToDev", e.getLocalizedMessage());
+        }
+    }
 
     public static int getListColor(int id){
         String[] colors = {"f94144","f3722c","f8961e","f9844a","f9c74f","90be6d","43aa8b","4d908e","577590","277da1"};
@@ -35,7 +85,7 @@ public class Utils {
         preferences.edit().putString("token", token).apply();
     }
 
-    static String getUserData(Context ctx){
+    static String getUserToken(Context ctx){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         return preferences.getString("token", EMPTY);
     }
@@ -46,7 +96,6 @@ public class Utils {
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         boolean isAvailable = false;
         if (networkInfo != null && networkInfo.isConnected()) {
-            // Network is present and connected
             isAvailable = true;
         }
         return isAvailable;

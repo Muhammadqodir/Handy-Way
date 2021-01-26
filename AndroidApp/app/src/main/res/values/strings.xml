@@ -27,5 +27,10 @@
     <string name="addToCart">Добавить в конзину</string>
     <string name="login">Войти</string>
     <string name="noInternetConnection">Не соеденение с интернетом!</string>
+    <string name="unexpedtedError">Произошла неожиданная ошибка!</string>
+    <string name="sendToDev">Отправить разработчикам</string>
     <string name="blockedUser">Ваш профиль заблокирован! <br/> Свяжитесь с администраторами для получения допольнительной информации.</string>
+
+
+    <string name="invalid_tel_pass">Неверный номар телефона или пароль</string>
 </resources>

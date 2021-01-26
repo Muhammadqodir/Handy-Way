@@ -1,16 +1,20 @@
 package uz.mq.handyway;
 
 
+import android.util.Log;
 import android.view.textclassifier.ConversationActions;
 
+import org.json.JSONObject;
+
 import okhttp3.FormBody;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HandyWayAPI {
-    private static String BASE_URL = "https://handyway.uz/api";
+    private static String BASE_URL = "https://handyway.uz/API/";
     OkHttpClient client = new OkHttpClient();
     String token;
 
@@ -18,50 +22,31 @@ public class HandyWayAPI {
         this.token = token;
     }
 
-    public APIResponse getCategorys(){
-        return getResponse(new FormBody.Builder()
-                .add("action", "getCategorys")
-                .add("token", token)
-                .build());
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public APIResponse getResponse(RequestBody formBody){
+    public APIResponse logIn(String tel, String pass){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("tel", tel)
+                .addFormDataPart("password", pass)
+                .addFormDataPart("device", android.os.Build.MANUFACTURER + android.os.Build.MODEL)
+                .build();
         Request request = new Request.Builder()
-                .url(BASE_URL + "/login.php")
-                .post(formBody)
+                .url(BASE_URL+"login.php")
+                .post(body)
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            if (response.code() == 200){
-                return new APIResponse(true, response.body().string(), "");
-            }else{
-                return new APIResponse(false, null, "Rsponse Code:" + response.code());
-            }
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.get("token"));
         }catch (Exception e){
-            return new APIResponse(false, null, e.getMessage());
+            return new APIResponse(0, e.getMessage(), null);
         }
     }
 
-    public static APIResponse logIN(String inn, String pass){
-        OkHttpClient client = new OkHttpClient();
-        RequestBody formBody = new FormBody.Builder()
-                .add("inn", inn)
-                .add("pass", pass)
-                .build();
-        Request request = new Request.Builder()
-                .url(BASE_URL + "/login.php")
-                .post(formBody)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.code() == 200){
-                return new APIResponse(true, response.body().string(), "");
-            }else{
-                return new APIResponse(false, null, "Rsponse Code:" + response.code());
-            }
-        }catch (Exception e){
-            return new APIResponse(false, null, e.getMessage());
-        }
 
-    }
 }

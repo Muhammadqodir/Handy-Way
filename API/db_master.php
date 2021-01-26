@@ -24,7 +24,7 @@ function getUserId($db, $token)
 	$sql = "SELECT * FROM `users_session` WHERE `token` = $token";
 	$q_res = $db->query($sql);
 	if ($q_res->num_rows > 0) {
-		$row = $q_res->fetch_assoc
+		$row = $q_res->fetch_assoc();
 		require $row["user_id"];
 	}else{
 		return "_invalid_token_";
@@ -40,11 +40,11 @@ function isActiveUser($db, $id)
 
 function chekUserAuth($db, $tel, $password)
 {
-	$sql = "SELECT * FROM `main_shop` WHERE `phone_number` = '$tel' AND `password` = '$password'"
+	$sql = "SELECT * FROM `main_shop` WHERE `phone_number` = '$tel' AND `password` = '$password'";
 	$q_res = $db->query($sql);
 	if ($q_res->num_rows > 0) {
-		$row = $q_res->fetch_assoc
-		require $row["id"];
+		$row = $q_res->fetch_assoc();
+		return $row["id"];
 	}else{
 		return -1;
 	}
@@ -55,5 +55,11 @@ function newUserAuth($db, $token, $ip, $location, $date, $device, $user_id)
 	$sql = "INSERT INTO `users_session` (`id`, `user_id`, `token`, `ip`, `date`, `device`) VALUES (NULL, '$user_id', '$token', '$ip', '$date', '$device');";
 	$q_res = $db->query($sql);
 }
+
+
+function strtosql($str){
+	return str_replace("'", "\'", $str);
+}
+
 
 ?>
