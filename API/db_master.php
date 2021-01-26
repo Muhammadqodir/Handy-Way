@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Tashkent');
 
 function init_db()
 {
@@ -21,11 +22,11 @@ function getTable($db, $table)
 
 function getUserId($db, $token)
 {
-	$sql = "SELECT * FROM `users_session` WHERE `token` = $token";
+	$sql = "SELECT * FROM `users_session` WHERE `token` = '$token'";
 	$q_res = $db->query($sql);
 	if ($q_res->num_rows > 0) {
 		$row = $q_res->fetch_assoc();
-		require $row["user_id"];
+		return $row["user_id"];
 	}else{
 		return "_invalid_token_";
 	}
@@ -33,7 +34,7 @@ function getUserId($db, $token)
 
 function isActiveUser($db, $id)
 {
-	$sql = "SELECT * FROM `users_session` WHERE `id` = $id AND `is_active` = 1";
+	$sql = "SELECT * FROM `main_shop` WHERE `id` = '$id' AND `is_active` = '1'";
 	$q_res = $db->query($sql);
 	return $q_res->num_rows>0;
 }

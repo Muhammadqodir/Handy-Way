@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Utils.setLogin(context, true);
                                 Utils.setUserToken(context, (String) response.getRes());
                                 ((LinearLayout) findViewById(R.id.login)).setVisibility(View.GONE);
+                                ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
+                                ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
                                 runApp();
                             }
                         });
@@ -135,13 +137,36 @@ public class LoginActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(context, MainActivity.class));
-                        LoginActivity.this.finish();
-                    }
-                });
+                handyWayAPI = new HandyWayAPI(Utils.getUserToken(context));
+                final APIResponse response = handyWayAPI.checkIsActive();
+                if (response.getCode() > 0){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            switch (response.getCode()){
+                                case 1:
+                                    if ((Boolean) response.getRes()){
+                                        startActivity(new Intent(context, MainActivity.class));
+                                        LoginActivity.this.finish();
+                                    }else{
+                                        ((LinearLayout) findViewById(R.id.blockedUser)).setVisibility(View.VISIBLE);
+                                    }
+                                    break;
+                                case 2:
+                                    Utils.setLogin(context, false);
+                                    initViews();
+                                    break;
+                            }
+                        }
+                    });
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                        }
+                    });
+                }
             }
         }).start();
     }
