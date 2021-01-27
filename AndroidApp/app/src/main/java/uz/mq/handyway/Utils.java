@@ -143,4 +143,8 @@ public class Utils {
         return newprice;
     }
 
+    public static void addToCart(){
+
+    }
+
 }
