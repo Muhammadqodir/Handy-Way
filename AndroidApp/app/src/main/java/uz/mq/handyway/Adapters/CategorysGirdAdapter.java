@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import uz.mq.handyway.GoodsActivity;
+import uz.mq.handyway.HandyWayAPI;
 import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.R;
 import uz.mq.handyway.Utils;
@@ -65,7 +66,7 @@ public class CategorysGirdAdapter  extends BaseAdapter {
                 ((Activity) context).startActivity(new Intent(context, GoodsActivity.class).putExtra("category_id", item.getId()).putExtra("title", item.getTitle()));
             }
         });
-        Picasso.get().load("https://handyway.uz/API/category_preview_master/get_preview.php?category_id="+item.getId()+ms).error(R.drawable.ic_icons8_error_1).into(((ImageView) root.findViewById(R.id.ivPreview)));
+        Picasso.get().load(HandyWayAPI.BASE_URL+"category_preview_master/get_preview.php?category_id="+item.getId()+ms).error(R.drawable.ic_icons8_error_1).into(((ImageView) root.findViewById(R.id.ivPreview)));
         return root;
     }
 }

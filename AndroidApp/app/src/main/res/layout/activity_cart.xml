@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".CartActivity">
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartList"
         android:layout_width="match_parent"
         android:numColumns="1"
         android:listSelector="#00000000"
+        android:paddingBottom="58dp"
+        android:clipToPadding="false"
         android:horizontalSpacing="0dp"
         android:verticalSpacing="0sp"
         android:layout_height="match_parent" />
@@ -50,6 +52,30 @@
             android:textColor="#444"
             android:textSize="18dp"
             android:text="@string/loading"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/btn_primary"
+        android:padding="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="32dp"
+            android:src="@drawable/ic_icons8_buy"
+            android:layout_marginRight="6dp"
+            android:layout_height="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/arrange_order"
+            android:textColor="@color/coloWhite"
+            android:textSize="18dp"
+            android:layout_margin="4dp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

@@ -69,6 +69,22 @@ function getGoods($db, $category_id, $district)
 	return $q_res;
 }
 
+function getGoodsByIds($db, $ids)
+{
+	$sql = "SELECT * FROM `main_good` WHERE";
+	$first = true;
+	foreach ($ids as $id) {
+		if ($first) {
+			$sql .= " `id` = $id";
+			$first = false;
+		}else{
+			$sql .= " OR `id` = $id";
+		}
+	}
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function getUserId($db, $token)
 {
 	$sql = "SELECT * FROM `users_session` WHERE `token` = '$token'";

@@ -18,6 +18,8 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import uz.mq.handyway.Adapters.GoodsGirdAdapter;
@@ -42,11 +44,19 @@ public class GoodsActivity extends AppCompatActivity {
     GoodsGirdAdapter adapter;
     View cartParent;
     TextView tvCart;
+    FloatingActionButton fab;
     private void initViews(){
         girdView = (GridView) findViewById(R.id.goodsGird);
         cartParent = findViewById(R.id.cartParent);
         tvCart = (TextView) findViewById(R.id.tvCart);
         tvCart.setText(CartUtils.getCartQuantity(context)+"");
+        fab = (FloatingActionButton) findViewById(R.id.fabCart);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, CartActivity.class));
+            }
+        });
         fillData();
     }
 

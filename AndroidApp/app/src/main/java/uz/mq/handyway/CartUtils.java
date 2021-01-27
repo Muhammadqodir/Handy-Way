@@ -99,6 +99,22 @@ public class CartUtils {
         return sharedPreference.getString("Cart", "empty");
     }
 
+    public static int[] getGoodsIds(Context ctx){
+        ArrayList<CartModel> cartModels = new ArrayList<>();
+        Gson gson = new Gson();
+        SharedPreferences sharedPreference = ctx.getSharedPreferences("Cart", Context.MODE_PRIVATE);
+        String cash_str = sharedPreference.getString("Cart", "empty");
+        if (!cash_str.equals("empty")){
+            Type typeOfObjectsList = new TypeToken<ArrayList<CartModel>>() {}.getType();
+            cartModels = gson.fromJson(cash_str, typeOfObjectsList);
+        }
+        int[] ids = new int[cartModels.size()];
+        for (int i = 0; i < cartModels.size(); i++){
+            ids[i] = cartModels.get(i).getId();
+        }
+        return ids;
+    }
+
     public static void clearCart(Context ctx){
         ArrayList<CartModel> cartModels = new ArrayList<>();
         Gson gson = new Gson();
