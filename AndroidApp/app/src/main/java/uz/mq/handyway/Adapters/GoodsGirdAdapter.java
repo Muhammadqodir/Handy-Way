@@ -1,21 +1,31 @@
 package uz.mq.handyway.Adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import uz.mq.handyway.CartUtils;
 import uz.mq.handyway.GoodsActivity;
 import uz.mq.handyway.HandyWayAPI;
+import uz.mq.handyway.Models.CartModel;
 import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.Models.GoodsModel;
 import uz.mq.handyway.R;
@@ -24,10 +34,14 @@ import uz.mq.handyway.Utils;
 public class GoodsGirdAdapter extends BaseAdapter {
     Context context;
     ArrayList<GoodsModel> models;
+    View cartParent;
+    TextView tvCart;
 
-    public GoodsGirdAdapter(Context context, ArrayList<GoodsModel> models) {
+    public GoodsGirdAdapter(Context context, ArrayList<GoodsModel> models, View cartParent, TextView tvCart) {
         this.context = context;
         this.models = models;
+        this.cartParent = cartParent;
+        this.tvCart = tvCart;
     }
 
     @Override
@@ -79,6 +93,23 @@ public class GoodsGirdAdapter extends BaseAdapter {
                 }
             }
         });
+        ((Button) root.findViewById(R.id.btnBuy)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()));
+            }
+        });
         return root;
+    }
+
+    private void addToCart(int id, int quantity){
+        CartUtils.addToCart(context, new CartModel(id, quantity));
+        tvCart.setText(CartUtils.getCartQuantity(context)+"");
+        cartParent.animate().scaleX(1.5f).scaleY(1.5f).setDuration(100).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                cartParent.animate().scaleX(1).scaleY(1).setDuration(500);
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package uz.mq.handyway;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,8 +40,13 @@ public class GoodsActivity extends AppCompatActivity {
 
     GridView girdView;
     GoodsGirdAdapter adapter;
+    View cartParent;
+    TextView tvCart;
     private void initViews(){
         girdView = (GridView) findViewById(R.id.goodsGird);
+        cartParent = findViewById(R.id.cartParent);
+        tvCart = (TextView) findViewById(R.id.tvCart);
+        tvCart.setText(CartUtils.getCartQuantity(context)+"");
         fillData();
     }
 
@@ -67,7 +73,7 @@ public class GoodsActivity extends AppCompatActivity {
                                     ArrayList<GoodsModel> models = (ArrayList<GoodsModel>) response.getRes();
                                     if (models.size() > 0){
                                         isEmpty(false);
-                                        adapter = new GoodsGirdAdapter(context, models);
+                                        adapter = new GoodsGirdAdapter(context, models, cartParent, tvCart);
                                         girdView.setAdapter(adapter);
                                     }else{
                                         isEmpty(true);
