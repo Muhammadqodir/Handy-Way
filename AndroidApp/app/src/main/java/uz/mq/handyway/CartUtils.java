@@ -2,6 +2,7 @@ package uz.mq.handyway;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
@@ -90,7 +91,14 @@ public class CartUtils {
         }
         return cartModels.size();
     }
-    
+
+    public static String getCartJsonString(Context ctx){
+        ArrayList<CartModel> cartModels = new ArrayList<>();
+        Gson gson = new Gson();
+        SharedPreferences sharedPreference = ctx.getSharedPreferences("Cart", Context.MODE_PRIVATE);
+        return sharedPreference.getString("Cart", "empty");
+    }
+
     public static void clearCart(Context ctx){
         ArrayList<CartModel> cartModels = new ArrayList<>();
         Gson gson = new Gson();

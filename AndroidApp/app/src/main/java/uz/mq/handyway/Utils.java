@@ -128,7 +128,7 @@ public class Utils {
 
     public static String convertPriceToString(int price){
         String price_str = String.valueOf(price);
-        Log.e("InputPrice:", price_str);
+        Log.i("InputPrice:", price_str);
         String newprice = "";
         int counter = price_str.length()%3;
         for (int i=0; i < price_str.length(); i++){
@@ -139,7 +139,7 @@ public class Utils {
             newprice += price_str.charAt(i);
             counter -= 1;
         }
-        Log.e("OutputPrice:", newprice);
+        Log.i("OutputPrice:", newprice);
         return newprice;
     }
 
