@@ -62,6 +62,13 @@ function getUserData($db, $user_id)
 	}
 }
 
+function getGoods($db, $category_id, $district)
+{
+	$sql = "SELECT * FROM `main_good` WHERE `category_id` = $category_id AND `distribution` LIKE '%\'$district\'%'";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function getUserId($db, $token)
 {
 	$sql = "SELECT * FROM `users_session` WHERE `token` = '$token'";

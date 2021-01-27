@@ -16,9 +16,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import uz.mq.handyway.Models.CategoryModel;
+import uz.mq.handyway.Models.GoodsModel;
 
 public class HandyWayAPI {
-    private static String BASE_URL = "https://handyway.uz/API/";
+    public static String BASE_URL = "https://handyway.uz/API/";
+    public static String BASE_URL_MEDIA = "https://handyway.uz/media/";
     OkHttpClient client = new OkHttpClient();
     String token;
 
@@ -93,6 +95,33 @@ public class HandyWayAPI {
             for (int i=0; i<list.length(); i++){
                 JSONObject item = list.getJSONObject(i);
                 models.add(new CategoryModel(item.getInt("id"), item.getString("name")));
+            }
+            return new APIResponse(json.getInt("code"), json.getString("message"), models);
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+    public APIResponse getGoods(int category_id){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("category_id", category_id+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_goods.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            JSONArray list = json.getJSONArray("res");
+            ArrayList<GoodsModel> models = new ArrayList<>();
+            for (int i=0; i<list.length(); i++){
+                JSONObject item = list.getJSONObject(i);
+                models.add(new GoodsModel(item.getInt("id"), item.getString("name"), item.getInt("price"), item.getInt("min_quantity"), item.getInt("max_quantity"), item.getString("pic")));
             }
             return new APIResponse(json.getInt("code"), json.getString("message"), models);
         }catch (Exception e){

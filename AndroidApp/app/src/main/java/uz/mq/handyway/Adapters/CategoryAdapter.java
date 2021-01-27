@@ -32,7 +32,6 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.MyVie
             tvTitle = (TextView) view.findViewById(R.id.tvTitle);
             card = (CardView) view.findViewById(R.id.card);
             ivPreview = (ImageView) view.findViewById(R.id.ivPreview);
-
         }
     }
 

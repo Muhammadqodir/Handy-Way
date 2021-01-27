@@ -41,4 +41,5 @@
     <string name="phone_num">Номер телефона</string>
     <string name="landmark">Ориентир</string>
     <string name="wholesaler">Оптовик</string>
+    <string name="summ">сумм</string>
 </resources>

@@ -126,4 +126,21 @@ public class Utils {
         ((Activity) context).finishAffinity();
     }
 
+    public static String convertPriceToString(int price){
+        String price_str = String.valueOf(price);
+        Log.e("InputPrice:", price_str);
+        String newprice = "";
+        int counter = price_str.length()%3;
+        for (int i=0; i < price_str.length(); i++){
+            if (counter == 0){
+                newprice += " ";
+                counter = 3;
+            }
+            newprice += price_str.charAt(i);
+            counter -= 1;
+        }
+        Log.e("OutputPrice:", newprice);
+        return newprice;
+    }
+
 }
