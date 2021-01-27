@@ -90,6 +90,13 @@ public class CartUtils {
         }
         return cartModels.size();
     }
-
     
+    public static void clearCart(Context ctx){
+        ArrayList<CartModel> cartModels = new ArrayList<>();
+        Gson gson = new Gson();
+        SharedPreferences sharedPreference = ctx.getSharedPreferences("Cart", Context.MODE_PRIVATE);
+        sharedPreference.edit().putString("Cart", gson.toJson(cartModels)).apply();
+    }
+
+
 }
