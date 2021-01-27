@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -49,11 +51,34 @@ public class GoodsGirdAdapter extends BaseAdapter {
         View root = layoutInflater.inflate(R.layout.goods_item, viewGroup, false);
         final GoodsModel item = models.get(i);
 
+        final TextView tvQuantity = (TextView) root.findViewById(R.id.tvQuantity);
+        tvQuantity.setText(item.getMin_quantity()+"");
+
         ((TextView) root.findViewById(R.id.tvTitle)).setText(item.getTitle());
         ((TextView) root.findViewById(R.id.tvPrice)).setText(Utils.convertPriceToString(item.getPrice())+" "+context.getResources().getString(R.string.summ));
-        ((TextView) root.findViewById(R.id.tvQuantity)).setText(String.valueOf(item.getMin_quantity()));
         Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+item.getPic_url()).error(R.drawable.no_image).into(((ImageView) root.findViewById(R.id.ivPic)));
-        
+        ((ImageButton) root.findViewById(R.id.btnMinus)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantity = Integer.parseInt(tvQuantity.getText().toString()) - 1;
+                if (quantity >= item.getMin_quantity()){
+                    tvQuantity.setText(quantity+"");
+                }else {
+                    Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        ((ImageButton) root.findViewById(R.id.btnPlus)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int quantity = Integer.parseInt(tvQuantity.getText().toString()) + 1;
+                if (quantity <= item.getMax_quantity()){
+                    tvQuantity.setText(quantity+"");
+                }else {
+                    Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         return root;
     }
 }

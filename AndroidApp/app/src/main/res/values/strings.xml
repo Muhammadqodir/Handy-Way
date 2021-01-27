@@ -42,4 +42,6 @@
     <string name="landmark">Ориентир</string>
     <string name="wholesaler">Оптовик</string>
     <string name="summ">сумм</string>
+    <string name="min_quanity">Минимальное количество для заказа</string>
+    <string name="max_quanity">Количество товаров на складе</string>
 </resources>
