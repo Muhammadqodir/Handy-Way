@@ -45,4 +45,8 @@
     <string name="min_quanity">Минимальное количество для заказа</string>
     <string name="max_quanity">Количество товаров на складе</string>
     <string name="arrange_order">Отправить заказ</string>
+    <string name="clear_cart">Очистить корзину</string>
+    <string name="confirm_action">Подтвердите действие</string>
+    <string name="cart_is_empty">Корзина покупок пусто!</string>
+    <string name="confirm_arrange_order">Подтвердите отправку заказа.\nПосле отправки вы можете внести изменения на ваш заказ в течении часа</string>
 </resources>

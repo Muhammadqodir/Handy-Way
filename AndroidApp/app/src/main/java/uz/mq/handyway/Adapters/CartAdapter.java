@@ -73,4 +73,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public int getItemCount() {
         return cartModels.size();
     }
+
+    public void clearCart(){
+        cartModels.clear();
+        goodsModels.clear();
+        notifyDataSetChanged();
+    }
 }

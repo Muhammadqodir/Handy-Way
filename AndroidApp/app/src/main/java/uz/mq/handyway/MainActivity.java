@@ -44,13 +44,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setActionBar();
         context = this;
         handyWayAPI = new HandyWayAPI(Utils.getUserToken(context));
-        setActionBar();
         initViews();
-
     }
 
     DrawerLayout drawer;
@@ -162,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setActionBar(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_modern_menu));

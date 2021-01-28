@@ -62,6 +62,8 @@
         android:padding="8dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:id="@+id/send_order"
+        android:layout_margin="12dp"
         android:clickable="true"
         android:layout_height="wrap_content">
         <ImageView

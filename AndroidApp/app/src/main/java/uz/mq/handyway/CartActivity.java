@@ -6,13 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.RenderNode;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,22 @@ public class CartActivity extends AppCompatActivity {
     private void initViews(){
         recyclerView = (RecyclerView) findViewById(R.id.cartList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ((LinearLayout) findViewById(R.id.send_order)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.arrange_order)
+                        .setMessage(R.string.confirm_arrange_order)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //sendOrder
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+            }
+        });
         fillList();
     }
 
@@ -95,7 +115,6 @@ public class CartActivity extends AppCompatActivity {
         setTitle(getResources().getString(R.string.cart));
     }
 
-
     private void isLoading(boolean val){
         if (val){
             ((LinearLayout) findViewById(R.id.llLoading)).setVisibility(View.VISIBLE);
@@ -108,6 +127,24 @@ public class CartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             ((Activity) context).finish();
+        }else if(item.getItemId() == R.id.action_clear_cart){
+            if (adapter != null){
+                new AlertDialog.Builder(context)
+                        .setTitle(R.string.clear_cart)
+                        .setMessage(R.string.confirm_action)
+                        .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                CartUtils.clearCart(context);
+                                adapter.clearCart();
+                                isEmpty(true);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+            }else {
+                Toast.makeText(context, R.string.cart_is_empty, Toast.LENGTH_SHORT).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -120,4 +157,9 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
+        return true;
+    }
 }
