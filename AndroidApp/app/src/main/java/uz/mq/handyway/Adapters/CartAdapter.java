@@ -96,6 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 int quantity = Integer.parseInt(holder.tvQuantity.getText().toString()) - 1;
                 if (quantity >= goodsModel.getMin_quantity()){
                     holder.tvQuantity.setText(quantity+"");
+                    cartModels.get(position).setQuantity(quantity);
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();
@@ -108,6 +109,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 int quantity = Integer.parseInt(holder.tvQuantity.getText().toString()) + 1;
                 if (quantity <= goodsModel.getMax_quantity()){
                     holder.tvQuantity.setText(quantity+"");
+                    cartModels.get(position).setQuantity(quantity);
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();

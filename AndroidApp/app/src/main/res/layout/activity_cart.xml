@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:layout_height="match_parent"
     tools:context=".CartActivity">
 
@@ -61,23 +62,65 @@
         android:background="@drawable/btn_primary"
         android:padding="8dp"
         android:gravity="center"
+        android:visibility="gone"
+        android:animateLayoutChanges="true"
         android:orientation="horizontal"
         android:id="@+id/send_order"
         android:layout_margin="12dp"
         android:clickable="true"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="32dp"
-            android:src="@drawable/ic_icons8_buy"
-            android:layout_marginRight="6dp"
-            android:layout_height="32dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:text="@string/arrange_order"
             android:textColor="@color/coloWhite"
+            android:id="@+id/tvBtnTitle"
             android:textSize="18dp"
-            android:layout_margin="4dp"
+            android:drawableLeft="@drawable/ic_icons8_buy"
+            android:gravity="center"
+            android:drawablePadding="12dp"
             android:textStyle="bold"
+            android:layout_height="wrap_content"/>
+        <ProgressBar
+            android:layout_width="32dp"
+            android:id="@+id/progress"
+            android:visibility="gone"
+            android:indeterminateTint="@color/coloWhite"
+            android:layout_height="32dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorSuccess"
+        android:gravity="center"
+        android:id="@+id/llSuccess"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="100dp"
+            android:src="@drawable/ic_icons8_ok_1"
+            android:layout_height="100dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textColor="@color/coloWhite"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:text="@string/sended"
+            android:layout_marginRight="24dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:text="@string/to_main"
+            android:background="@drawable/btn_higth_contrast_success"
+            android:textColor="@color/colorSuccess"
+            android:textStyle="bold"
+            android:paddingLeft="12dp"
+            android:id="@+id/btnBackToMain"
+            android:paddingRight="12dp"
+            android:layout_margin="12dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 

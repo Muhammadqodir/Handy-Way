@@ -130,6 +130,11 @@ function getCategoryImages($db, $category_id, $limit)
 	return $q_res;
 }
 
+function newOrder($db, $date, $products, $user_id)
+{
+	$sql = "INSERT INTO `main_orders` (`id`, `date`, `products`, `status`, `user_id_id`) VALUES (NULL, '$date', '$products', '0', '$user_id');";
+	$q_res = $db->query($sql);
+}
 
 function strtosql($str){
 	return str_replace("'", "\'", $str);

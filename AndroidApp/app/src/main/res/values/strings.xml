@@ -50,4 +50,6 @@
     <string name="cart_is_empty">Корзина покупок пусто!</string>
     <string name="confirm_arrange_order">Подтвердите отправку заказа.\nПосле отправки вы можете внести изменения на ваш заказ в течении часа</string>
     <string name="remove_from_cart">Удалить из корзины</string>
+    <string name="sended">Ваш заказ успешно отправлено!</string>
+    <string name="to_main">На главную</string>
 </resources>

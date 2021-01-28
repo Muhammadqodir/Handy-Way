@@ -159,5 +159,26 @@ public class HandyWayAPI {
         }
     }
 
+    public APIResponse newOrder(String cart){
+        Gson gson = new Gson();
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("products", cart)
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"new_order.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.getString("res"));
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), false);
+        }
+    }
 
 }

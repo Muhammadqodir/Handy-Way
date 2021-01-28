@@ -9,12 +9,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.RenderNode;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +54,57 @@ public class CartActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //sendOrder
+                                ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.VISIBLE);
+                                ((TextView) findViewById(R.id.tvBtnTitle)).setVisibility(View.GONE);
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        final APIResponse response = api.newOrder(CartUtils.getCartJsonString(context));
+                                        if (response.getCode() > 0){
+                                            switch (response.getCode()){
+                                                case 1:
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                                                            ((TextView) findViewById(R.id.tvTitle)).setVisibility(View.VISIBLE);
+                                                            getSupportActionBar().hide();
+                                                            CartUtils.clearCart(context);
+                                                            ((LinearLayout) findViewById(R.id.llSuccess)).setVisibility(View.VISIBLE);
+                                                            ((Button) findViewById(R.id.btnBackToMain)).setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View view) {
+                                                                    startActivity(new Intent(context, MainActivity.class));
+                                                                    ((Activity) context).finish();
+                                                                    ((Activity) context).finishAffinity();
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                    break;
+                                                case 2:
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                                                            ((TextView) findViewById(R.id.tvTitle)).setVisibility(View.VISIBLE);
+                                                            Utils.logOut(context);
+                                                        }
+                                                    });
+                                                    break;
+                                            }
+                                        }else {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
+                                                    ((TextView) findViewById(R.id.tvTitle)).setVisibility(View.VISIBLE);
+                                                    Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                                                }
+                                            });
+                                        }
+                                    }
+                                }).start();
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
@@ -152,8 +206,10 @@ public class CartActivity extends AppCompatActivity {
     private void isEmpty(boolean val){
         if (val){
             ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.send_order)).setVisibility(View.GONE);
         }else {
             ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.send_order)).setVisibility(View.VISIBLE);
         }
     }
 
