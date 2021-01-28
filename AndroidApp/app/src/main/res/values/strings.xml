@@ -52,4 +52,9 @@
     <string name="remove_from_cart">Удалить из корзины</string>
     <string name="sended">Ваш заказ успешно отправлено!</string>
     <string name="to_main">На главную</string>
+    <string name="description">Описание:</string>
+    <string name="payment_method">Метод оплаты:</string>
+    <string name="price">Цена</string>
+    <string name="title_activity_view_good">ScrollingActivity</string>
+
 </resources>

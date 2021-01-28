@@ -3,7 +3,9 @@ package uz.mq.handyway.Adapters;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.Models.GoodsModel;
 import uz.mq.handyway.R;
 import uz.mq.handyway.Utils;
+import uz.mq.handyway.ViewGoodActivity;
 
 public class GoodsGirdAdapter extends BaseAdapter {
     Context context;
@@ -97,6 +102,12 @@ public class GoodsGirdAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()));
+            }
+        });
+        ((CardView) root.findViewById(R.id.cardParent)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((Activity) context).startActivity(new Intent(context, ViewGoodActivity.class).putExtra("id", item.getId()).putExtra("title", item.getTitle()));
             }
         });
         return root;
