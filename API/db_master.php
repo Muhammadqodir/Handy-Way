@@ -69,6 +69,15 @@ function getGoods($db, $category_id, $district)
 	return $q_res;
 }
 
+function searchGoods($db, $category_id, $district, $q){
+	$sql = "SELECT * FROM `main_good` WHERE `name` LIKE '%$q%' AND `distribution` LIKE '%\'$district\'%'";
+	if ($category_id >= 0) {
+		$sql = "SELECT * FROM `main_good` WHERE `name` LIKE '%$q%' AND `category_id` = $category_id AND `distribution` LIKE '%\'$district\'%'";
+	}
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function getGood($db, $good_id)
 {
 	$sql = "SELECT * FROM `main_good` WHERE `id` = $good_id";

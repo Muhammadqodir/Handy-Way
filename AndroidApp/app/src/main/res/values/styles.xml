@@ -8,6 +8,25 @@
         <item name="fontFamily">@font/font_l</item>
     </style>
 
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="colorPrimary">@color/coloWhite</item>
+        <item name="colorAccent">@color/coloWhite</item>
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/ic_icons8_search</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <item name="queryBackground">@color/coloWhite</item>
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+        <item name="android:textColorPrimary">@color/coloWhite</item>
+        <!--This line changes the color of icons in toolbar (back, overflow menu icons)-->
+        <item name="android:textColorSecondary">@color/coloWhite</item>
+
+        <!-- Hint Color -->
+        <item name="android:textColorHint">@color/coloWhite</item>
+        <!-- Icon Color -->
+        <item name="android:tint">@color/coloWhite</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

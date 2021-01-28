@@ -2,21 +2,22 @@ package uz.mq.handyway;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
+import android.widget.EdgeEffect;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,17 +26,18 @@ import java.util.ArrayList;
 import uz.mq.handyway.Adapters.GoodsGirdAdapter;
 import uz.mq.handyway.Models.GoodsModel;
 
-public class GoodsActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
+
     Context context;
     HandyWayAPI api;
     int category_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods);
+        setContentView(R.layout.activity_search);
         context = this;
-        category_id = getIntent().getIntExtra("category_id", 0);
         api = new HandyWayAPI(Utils.getUserToken(context));
+        category_id = getIntent().getIntExtra("category_id", -1);
         setActionBar();
         initViews();
     }
@@ -51,7 +53,33 @@ public class GoodsActivity extends AppCompatActivity {
     View cartParent;
     TextView tvCart;
     FloatingActionButton fab;
+    SearchView searchView;
     private void initViews(){
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if (s.length() >= 3){
+                    search(s);
+                }else {
+                    Toast.makeText(context, R.string.at_least, Toast.LENGTH_SHORT).show();
+                    searchView.setFocusable(true);
+                    searchView.setIconified(false);
+                    searchView.requestFocusFromTouch();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         girdView = (GridView) findViewById(R.id.goodsGird);
         cartParent = findViewById(R.id.cartParent);
         tvCart = (TextView) findViewById(R.id.tvCart);
@@ -63,22 +91,17 @@ public class GoodsActivity extends AppCompatActivity {
                 startActivity(new Intent(context, CartActivity.class));
             }
         });
-        fillData();
+
     }
 
-    private void setActionBar(){
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_icons8_left_4));
-        setTitle(getIntent().getStringExtra("title"));
-    }
-
-    private void fillData(){
+    private void search(final String q){
+        isEmpty(false);
         isLoading(true);
+        girdView.setAdapter(null);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final APIResponse response = api.getGoods(category_id);
+                final APIResponse response = api.search(q, category_id);
                 if (response.getCode() > 0){
                     switch (response.getCode()){
                         case 1:
@@ -120,6 +143,13 @@ public class GoodsActivity extends AppCompatActivity {
         }).start();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            ((Activity) context).finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     private void isLoading(boolean val){
@@ -137,20 +167,11 @@ public class GoodsActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.GONE);
         }
     }
-    
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
-            ((Activity) context).finish();
-        }else if (item.getItemId() == R.id.action_search){
-            startActivity(new Intent(context, SearchActivity.class).putExtra("category_id", category_id));
-        }
-        return super.onOptionsItemSelected(item);
+
+
+    private void setActionBar(){
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 }

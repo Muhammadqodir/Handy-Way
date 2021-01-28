@@ -58,6 +58,9 @@
     <string name="price">Цена</string>
     <string name="added_to_cart">Товар добавлен в корзину!</string>
     <string name="go_to_cart">Перейти в корзину</string>
+    <string name="search_">Поиск</string>
+    <string name="at_least">Минимум 3 буквы для поиска!</string>
+    <string name="no_results">Поиск не дал результатов!</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>

@@ -161,7 +161,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setActionBar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }catch (Exception e){
+
+        }
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_modern_menu));
     }
@@ -176,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == android.R.id.home){
             drawer.openDrawer(Gravity.LEFT);
+        }else if(item.getItemId() == R.id.action_search){
+            startActivity(new Intent(context, SearchActivity.class).putExtra("category_id", -1));
         }
         return true;
     }
