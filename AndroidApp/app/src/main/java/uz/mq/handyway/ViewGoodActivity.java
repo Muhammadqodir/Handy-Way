@@ -19,8 +19,9 @@ public class ViewGoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_good);
         setActionBar();
-
+        initViews();
     }
+    
 
     private void setActionBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -31,6 +32,10 @@ public class ViewGoodActivity extends AppCompatActivity {
         setTitle(getIntent().getStringExtra("title"));
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
+    }
+
+    private void fillData(){
+
     }
 
     private void isLoading(boolean val){
