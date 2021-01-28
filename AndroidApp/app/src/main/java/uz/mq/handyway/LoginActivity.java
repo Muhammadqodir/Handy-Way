@@ -101,6 +101,13 @@ public class LoginActivity extends AppCompatActivity {
                                 ((Button) findViewById(R.id.btnLogin)).setVisibility(View.VISIBLE);
                                 ((ProgressBar) findViewById(R.id.progress)).setVisibility(View.GONE);
                                 Toast.makeText(context, R.string.invalid_tel_pass, Toast.LENGTH_SHORT).show();
+                                ((Button) findViewById(R.id.btnSupportPass)).setVisibility(View.VISIBLE);
+                                ((Button) findViewById(R.id.btnSupportPass)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Utils.startSupportIntent(context);
+                                    }
+                                });
                             }
                         });
                     }

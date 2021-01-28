@@ -22,7 +22,9 @@
 	}else{
 		$res["code"] = 4;
 		$res["message"] = "_invalid_pass_";
-		$res["user_data"] = array();
+		$res["user_data"] = array(
+		    "res" => "empty"
+		);
 		echo json_encode($res);
 	}
 $db->close();
