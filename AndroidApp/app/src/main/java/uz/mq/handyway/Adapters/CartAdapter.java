@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import uz.mq.handyway.CartActivity;
 import uz.mq.handyway.CartUtils;
 import uz.mq.handyway.HandyWayAPI;
 import uz.mq.handyway.Models.CartModel;
@@ -30,11 +31,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     Context context;
     ArrayList<CartModel> cartModels;
     ArrayList<GoodsModel> goodsModels;
+    Runnable onEmpty;
 
-    public CartAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels) {
+    public CartAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels, Runnable onEmpty) {
         this.context = context;
         this.cartModels = cartModels;
         this.goodsModels = goodsModels;
+        this.onEmpty = onEmpty;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
@@ -82,6 +85,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 cartModels.remove(position);
                                 goodsModels.remove(position);
+                                if (cartModels.size() == 0){
+                                    onEmpty.run();
+                                }
                                 CartUtils.removeItem(context, cartModel.getId());
                                 notifyItemRemoved(position);
                                 notifyItemRangeRemoved(position, cartModels.size());

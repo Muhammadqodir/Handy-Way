@@ -130,7 +130,12 @@ public class CartActivity extends AppCompatActivity {
                                     ArrayList<GoodsModel> goodsModels = (ArrayList<GoodsModel>) response.getRes();
                                     if (goodsModels.size() > 0){
                                         isEmpty(false);
-                                        adapter = new CartAdapter(context, CartUtils.getCart(context), goodsModels);
+                                        adapter = new CartAdapter(context, CartUtils.getCart(context), goodsModels, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                isEmpty(true);
+                                            }
+                                        });
                                         recyclerView.setAdapter(adapter);
                                     }else {
                                         isEmpty(true);
