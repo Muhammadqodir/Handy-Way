@@ -40,6 +40,12 @@ public class GoodsActivity extends AppCompatActivity {
         initViews();
     }
 
+    @Override
+    protected void onStart() {
+        tvCart.setText(CartUtils.getCartQuantity(context)+"");
+        super.onStart();
+    }
+
     GridView girdView;
     GoodsGirdAdapter adapter;
     View cartParent;
