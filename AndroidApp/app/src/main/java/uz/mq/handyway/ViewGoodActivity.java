@@ -21,7 +21,7 @@ public class ViewGoodActivity extends AppCompatActivity {
         setActionBar();
 
     }
-    
+
     private void setActionBar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

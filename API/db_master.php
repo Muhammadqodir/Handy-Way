@@ -69,6 +69,13 @@ function getGoods($db, $category_id, $district)
 	return $q_res;
 }
 
+function getGoods($db, $good_id)
+{
+	$sql = "SELECT * FROM `main_good` WHERE `id` = $good_id";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function getGoodsByIds($db, $ids)
 {
 	$sql = "SELECT * FROM `main_good` WHERE";
