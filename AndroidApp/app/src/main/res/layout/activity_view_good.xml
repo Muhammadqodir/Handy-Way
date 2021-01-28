@@ -109,6 +109,7 @@
         android:background="@color/colorSuccess"
         android:gravity="center"
         android:orientation="vertical"
+        android:translationZ="99999dp"
         android:visibility="gone"
         android:animateLayoutChanges="true"
         android:id="@+id/llSuccess"
