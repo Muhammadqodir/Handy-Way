@@ -54,7 +54,10 @@
     <string name="to_main">На главную</string>
     <string name="description">Описание:</string>
     <string name="payment_method">Метод оплаты:</string>
+    <string name="in_stock">В наличии:</string>
     <string name="price">Цена</string>
+    <string name="added_to_cart">Товар добавлен в корзину!</string>
+    <string name="go_to_cart">Перейти в корзину</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>

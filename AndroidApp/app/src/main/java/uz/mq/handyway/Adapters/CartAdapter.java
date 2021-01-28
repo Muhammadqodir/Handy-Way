@@ -112,7 +112,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     cartModels.get(position).setQuantity(quantity);
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
                 }else {
-                    Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+goodsModel.getMax_quantity(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
