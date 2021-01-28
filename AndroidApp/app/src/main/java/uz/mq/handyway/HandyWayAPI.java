@@ -18,6 +18,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import uz.mq.handyway.Models.CategoryModel;
+import uz.mq.handyway.Models.GoodDetalis;
 import uz.mq.handyway.Models.GoodsModel;
 
 public class HandyWayAPI {
@@ -154,6 +155,29 @@ public class HandyWayAPI {
                 models.add(new GoodsModel(item.getInt("id"), item.getString("name"), item.getInt("price"), item.getInt("min_quantity"), item.getInt("max_quantity"), item.getString("pic")));
             }
             return new APIResponse(json.getInt("code"), json.getString("message"), models);
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+    public APIResponse getGood(int good_id){
+        Gson gson = new Gson();
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("good_id", good_id+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_good.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json_ = new JSONObject(r_body);
+            JSONObject json = json_.getJSONObject("res");
+            return new APIResponse(json_.getInt("code"), json_.getString("message"), new GoodDetalis(json.getInt("id"), json.getString("name"), json.getString("description"), json.getString("payment_method"), json.getInt("price"), json.getInt("min_quantity"), json.getInt("max_quantity"), json.getString("pic")));
         }catch (Exception e){
             return new APIResponse(0, e.getMessage(), null);
         }

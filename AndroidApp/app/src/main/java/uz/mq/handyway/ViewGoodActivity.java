@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,11 +16,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import uz.mq.handyway.Models.CartModel;
+import uz.mq.handyway.Models.GoodDetalis;
 
 public class ViewGoodActivity extends AppCompatActivity {
     Context context;
@@ -40,6 +43,7 @@ public class ViewGoodActivity extends AppCompatActivity {
     TextView tvTitle, tvPrice, tvDesc, tvMethod, tvQuantity, tvInStock;
     ImageButton btnMinus, btnPlus;
     Button btnBuy;
+    ImageView ivPic;
     private void initViews(){
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvDesc = (TextView) findViewById(R.id.tvDescription);
@@ -49,6 +53,7 @@ public class ViewGoodActivity extends AppCompatActivity {
         tvQuantity = (TextView) findViewById(R.id.tvQuantity);
         btnMinus = (ImageButton) findViewById(R.id.btnMinus);
         btnPlus = (ImageButton) findViewById(R.id.btnPlus);
+        ivPic = (ImageView) findViewById(R.id.ivPic);
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +85,7 @@ public class ViewGoodActivity extends AppCompatActivity {
                 }
             }
         });
+        fillData();
     }
 
     private void addToCart(int id, int quantity){
@@ -95,7 +101,58 @@ public class ViewGoodActivity extends AppCompatActivity {
     }
 
     private void fillData(){
-
+        isLoading(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final APIResponse response = api.getGood(getIntent().getIntExtra("id", 0));
+                if (response.getCode() > 0){
+                    switch (response.getCode()){
+                        case 1:
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GoodDetalis goodDetalis = (GoodDetalis) response.getRes();
+                                    tvDesc.setText(goodDetalis.getDescription());
+                                    tvTitle.setText(goodDetalis.getName());
+                                    tvMethod.setText(goodDetalis.getPayment_method().replace("[", "").replace("]", "").replace("'" ,""));
+                                    tvInStock.setText(goodDetalis.getMax_q()+"");
+                                    tvQuantity.setText(goodDetalis.getMin_q()+"");
+                                    goodId = goodDetalis.getId();
+                                    minQuantity = goodDetalis.getMin_q();
+                                    maxQuantity = goodDetalis.getMax_q();
+                                    Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+goodDetalis.getPic_url()).error(R.drawable.no_image).into(ivPic);
+                                    isLoading(false);
+                                }
+                            });
+                            break;
+                        case 2:
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.logOut(context);
+                                }
+                            });
+                            break;
+                        case 3:
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                                }
+                            });
+                            break;
+                    }
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void setActionBar(){
