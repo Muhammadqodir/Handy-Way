@@ -63,6 +63,7 @@
     <string name="no_results">Поиск не дал результатов!</string>
     <string name="yes">ДА</string>
     <string name="no">НЕТ</string>
+    <string name="order_status">Статус заказа</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>
