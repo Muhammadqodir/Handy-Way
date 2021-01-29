@@ -64,6 +64,10 @@
     <string name="yes">ДА</string>
     <string name="no">НЕТ</string>
     <string name="order_status">Статус заказа</string>
+    <string name="order">Заказ</string>
+    <string name="order_status_sended">Отправлено</string>
+    <string name="order_status_approved">Одобрено</string>
+    <string name="order_status_declined">Отклонено</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>

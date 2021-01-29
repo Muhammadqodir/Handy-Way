@@ -101,7 +101,7 @@ public class GoodsGirdAdapter extends BaseAdapter {
         ((Button) root.findViewById(R.id.btnBuy)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()));
+                addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()), item.getPrice());
             }
         });
         ((CardView) root.findViewById(R.id.cardParent)).setOnClickListener(new View.OnClickListener() {
@@ -113,8 +113,8 @@ public class GoodsGirdAdapter extends BaseAdapter {
         return root;
     }
 
-    private void addToCart(int id, int quantity){
-        CartUtils.addToCart(context, new CartModel(id, quantity));
+    private void addToCart(int id, int quantity, int price){
+        CartUtils.addToCart(context, new CartModel(id, quantity, price));
         tvCart.setText(CartUtils.getCartQuantity(context)+"");
         cartParent.animate().scaleX(1.5f).scaleY(1.5f).setDuration(100).withEndAction(new Runnable() {
             @Override

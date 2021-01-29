@@ -86,6 +86,23 @@ function getShopCategory($db, $id)
 	}
 }
 
+function getOrderItemIds($db, $order_id)
+{
+	$sql = "SELECT * FROM `main_orders` WHERE `id` = $order_id";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		$items = json_decode($row["products"], true);
+		$ids = array();
+		for ($i=0; $i < count($items); $i++) {
+			$ids[] = $items[$i]["id"];
+		}
+		return $ids;
+	}else{
+		return "_invalid_order_id";
+	}
+}
+
 function getGoods($db, $category_id, $district)
 {
 	$sql = "SELECT * FROM `main_good` WHERE `category_id` = $category_id AND `distribution` LIKE '%\'$district\'%'";
@@ -105,6 +122,12 @@ function searchGoods($db, $category_id, $district, $q){
 function getGood($db, $good_id)
 {
 	$sql = "SELECT * FROM `main_good` WHERE `id` = $good_id";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
+function getOrders($db, $user_id){
+	$sql = "SELECT * FROM `main_orders` WHERE `user_id_id` = $user_id";
 	$q_res = $db->query($sql);
 	return $q_res;
 }

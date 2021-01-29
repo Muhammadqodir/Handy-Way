@@ -50,7 +50,7 @@
                 android:text="Отправлено"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:id="@+id/tvstatus"
+                android:id="@+id/tvStatus"
                 android:layout_marginTop="4dp"
                 android:textSize="15dp"
                 android:textColor="#444"

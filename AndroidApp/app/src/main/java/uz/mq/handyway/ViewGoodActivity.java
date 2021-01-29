@@ -40,6 +40,7 @@ public class ViewGoodActivity extends AppCompatActivity {
     int minQuantity = 0;
     int maxQuantity = 0;
     int goodId = -1;
+    int price = -1;
     TextView tvTitle, tvPrice, tvDesc, tvMethod, tvQuantity, tvInStock;
     ImageButton btnMinus, btnPlus;
     Button btnBuy;
@@ -81,15 +82,15 @@ public class ViewGoodActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (goodId >= 0){
-                    addToCart(goodId, Integer.parseInt(tvQuantity.getText().toString()));
+                    addToCart(goodId, Integer.parseInt(tvQuantity.getText().toString()), price);
                 }
             }
         });
         fillData();
     }
 
-    private void addToCart(int id, int quantity){
-        CartUtils.addToCart(context, new CartModel(id, quantity));
+    private void addToCart(int id, int quantity, int price){
+        CartUtils.addToCart(context, new CartModel(id, quantity, price));
         ((LinearLayout) findViewById(R.id.llSuccess)).setVisibility(View.VISIBLE);
         ((Button) findViewById(R.id.btnGoToCart)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +122,7 @@ public class ViewGoodActivity extends AppCompatActivity {
                                     goodId = goodDetalis.getId();
                                     minQuantity = goodDetalis.getMin_q();
                                     maxQuantity = goodDetalis.getMax_q();
+                                    price = goodDetalis.getPrice();
                                     Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+goodDetalis.getPic_url()).error(R.drawable.no_image).into(ivPic);
                                     isLoading(false);
                                 }

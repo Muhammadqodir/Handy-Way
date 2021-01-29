@@ -3,6 +3,7 @@ package uz.mq.handyway.Models;
 public class CartModel {
     int id;
     int quantity;
+    int price;
 
     public int getId() {
         return id;
@@ -20,8 +21,17 @@ public class CartModel {
         this.quantity = quantity;
     }
 
-    public CartModel(int id, int quantity) {
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public CartModel(int id, int quantity, int price) {
         this.id = id;
         this.quantity = quantity;
+        this.price = price;
     }
 }
