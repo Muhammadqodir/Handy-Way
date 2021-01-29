@@ -20,6 +20,7 @@ import okhttp3.Response;
 import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.Models.GoodDetalis;
 import uz.mq.handyway.Models.GoodsModel;
+import uz.mq.handyway.Models.ShopDetalis;
 
 public class HandyWayAPI {
     public static String BASE_URL = "https://handyway.uz/API/";
@@ -51,7 +52,12 @@ public class HandyWayAPI {
             String r_body = response.body().string();
             Log.i("ResponseBody", r_body);
             JSONObject json = new JSONObject(r_body);
-            return new APIResponse(json.getInt("code"), json.getString("message"), json.getJSONObject("user_data"));
+            if (json.getInt("code") == 1){
+                return new APIResponse(json.getInt("code"), json.getString("message"), json.getJSONObject("user_data"));
+            }else {
+                return new APIResponse(json.getInt("code"), json.getString("message"), null);
+            }
+
         }catch (Exception e){
             return new APIResponse(0, e.getMessage(), null);
         }
@@ -206,7 +212,37 @@ public class HandyWayAPI {
             Log.i("ResponseBody", r_body);
             JSONObject json_ = new JSONObject(r_body);
             JSONObject json = json_.getJSONObject("res");
-            return new APIResponse(json_.getInt("code"), json_.getString("message"), new GoodDetalis(json.getInt("id"), json.getString("name"), json.getString("description"), json.getString("payment_method"), json.getInt("price"), json.getInt("min_quantity"), json.getInt("max_quantity"), json.getString("pic")));
+            if (json_.getInt("code") == 1){
+                return new APIResponse(json_.getInt("code"), json_.getString("message"), new GoodDetalis(json.getInt("id"), json.getString("name"), json.getString("description"), json.getString("payment_method"), json.getInt("price"), json.getInt("min_quantity"), json.getInt("max_quantity"), json.getString("pic")));
+            }else{
+                return new APIResponse(json_.getInt("code"), json_.getString("message"), null);
+            }
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+    public APIResponse getShopDetalis(){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_shop_detalis.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json_ = new JSONObject(r_body);
+            JSONObject json = json_.getJSONObject("res");
+            if (json_.getInt("code") == 1){
+                return new APIResponse(json_.getInt("code"), json_.getString("message"), new ShopDetalis(json.getInt("id"), json.getString("name"), json.getString("owner"), json.getString("inn"), json.getString("phone_number"), json.getString("district_str"), json.getString("landmark"), json.getString("category_str"), json.getString("photo"), json.getString("is_wholesaler").equals("1")));
+            }else{
+                return new APIResponse(json_.getInt("code"), json_.getString("message"), null);
+            }
+
         }catch (Exception e){
             return new APIResponse(0, e.getMessage(), null);
         }

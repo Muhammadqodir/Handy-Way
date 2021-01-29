@@ -153,6 +153,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_cart:
                 startActivity(new Intent(context, CartActivity.class));
                 break;
+            case R.id.nav_support:
+                Utils.startSupportIntent(context);
+                break;
+            case R.id.nav_orders:
+                startActivity(new Intent(context, OrdersActivity.class));
+                break;
+
         }
         drawer.close();
         return false;
@@ -163,11 +170,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_modern_menu));
         }catch (Exception e){
 
         }
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_modern_menu));
     }
 
     @Override

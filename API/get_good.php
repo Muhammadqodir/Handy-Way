@@ -32,19 +32,25 @@ if ($user_id != "_invalid_token_") {
 		}else{
 			$res["code"] = 3;
 			$res["message"] = "_invalid_product_id_";
-			$res["res"] = array();
+			$res["res"] = array(
+			    "res" => "empty"
+			);
 			echo json_encode($res);
 		}
 	}else{
 		$res["code"] = 2;
 		$res["message"] = "_invalid_user_id_";
-		$res["res"] = array();
+		$res["res"] = array(
+		    "res" => "empty"
+		);
 		echo json_encode($res);
 	}
 }else{
 	$res["code"] = 2;
 	$res["message"] = "_invalid_token_";
-	$res["res"] = array();
+	$res["res"] = array(
+	    "res" => "empty"
+	);
 	echo json_encode($res);
 }
 $db->close();

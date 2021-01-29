@@ -61,6 +61,8 @@
     <string name="search_">Поиск</string>
     <string name="at_least">Минимум 3 буквы для поиска!</string>
     <string name="no_results">Поиск не дал результатов!</string>
+    <string name="yes">ДА</string>
+    <string name="no">НЕТ</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>

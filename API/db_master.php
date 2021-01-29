@@ -62,6 +62,30 @@ function getUserData($db, $user_id)
 	}
 }
 
+function getDistrict($db, $id)
+{
+	$sql = "SELECT * FROM `main_district` WHERE `id` = $id";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		return $row["name"];
+	}else{
+		return "_invalid_district_id_";
+	}
+}
+
+function getShopCategory($db, $id)
+{
+	$sql = "SELECT * FROM `main_shopcategory` WHERE `id` = $id";
+	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		return $row["name"];
+	}else{
+		return "_invalid_shopcategory_id_";
+	}
+}
+
 function getGoods($db, $category_id, $district)
 {
 	$sql = "SELECT * FROM `main_good` WHERE `category_id` = $category_id AND `distribution` LIKE '%\'$district\'%'";
