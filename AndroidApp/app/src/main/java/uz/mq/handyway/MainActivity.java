@@ -156,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_cart:
                 startActivity(new Intent(context, CartActivity.class));
                 break;
+            case R.id.nav_lang:
+                Utils.showLanguageDialog(context, getLayoutInflater());
+                break;
             case R.id.nav_support:
                 Utils.showSupportDialog(context, getLayoutInflater());
                 break;

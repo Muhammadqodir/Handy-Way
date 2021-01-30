@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">Handy Way</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="profile">Profil</string>
+    <string name="orders">Mening haridlarim</string>
+    <string name="return_">Qaytarish</string>
+    <string name="support">Tex. yordam</string>
+    <string name="main">Bosh sahifa</string>
+    <string name="cart">Savat</string>
+    <string name="exit">Profildan chiqish</string>
+    <string name="search">Qidiruv</string>
+    <string name="about">Dastur xaqida</string>
+
+
+    <string name="fio">F.I.SH.</string>
+    <string name="inn">INN</string>
+    <string name="phone">Telefon raqam</string>
+    <string name="password">Parol</string>
+    <string name="buy">Harid qilish</string>
+    <string name="addToCart">Savatga tashlash</string>
+    <string name="login">Kirish</string>
+    <string name="noInternetConnection">Server bilan aloqa yoq!</string>
+    <string name="unexpedtedError">Kutilmagan hatolik yuz berdi!</string>
+    <string name="sendToDev">Dasturchiga yuborish</string>
+    <string name="blockedUser">Sizning profilingiz bloklangan! <br /> Qoshimcha ma\'lumot olish uchun tex. yordamda murojat qiling.</string>
+
+    <string name="invalid_tel_pass">Telefon raqam yoki parol xato kiritilgan</string>
+    <string name="loading">Ma\'lumotlar yuklanmoqda...</string>
+    <string name="empty">Bom-bosh!</string>
+    <string name="confirm_exit">Profildan chiqishni tasdiqlang</string>
+    <string name="confirm">Tasdiqlash</string>
+    <string name="cancel">Bekor qilish</string>
+    <string name="adres">Manzil</string>
+    <string name="phone_num">Telefon raqam</string>
+    <string name="landmark">Mojal</string>
+    <string name="wholesaler">Ulgurchi</string>
+    <string name="summ">so\'m</string>
+    <string name="min_quanity">Minimal buyurtma soni</string>
+    <string name="max_quanity">Zaxiradagi maxsulotlar soni</string>
+    <string name="arrange_order">Buyurtma qilish</string>
+    <string name="clear_cart">Savatni tozalash</string>
+    <string name="confirm_action">Amalni tasdiqlang</string>
+    <string name="cart_is_empty">Xarid savati bosh!</string>
+    <string name="confirm_arrange_order">Buyurtmani yuborishni tasdiqlang.\nTasdiqlashdan so\'ng 1 soat ichida buyurtmaga o\'zgartirish kirita olasiz.</string>
+    <string name="remove_from_cart">Savatdan ochirish</string>
+    <string name="sended">Buyurtmandiz muvofaqiyatli yuborildi!</string>
+    <string name="to_main">Boshiga</string>
+    <string name="description">Tavsif:</string>
+    <string name="payment_method">To\'lov turi:</string>
+    <string name="in_stock">Omborda mavjud:</string>
+    <string name="price">Narxi</string>
+    <string name="added_to_cart">Maxsulot savatga qo\'shildi!</string>
+    <string name="go_to_cart">Savatga o\'tish</string>
+    <string name="search_">Qidiruv</string>
+    <string name="at_least">Qidirish uchun kamida 3ta xarf kiriting!</string>
+    <string name="no_results">Qidiruv natija bermadi!</string>
+    <string name="yes">XA</string>
+    <string name="no">YO\'Q</string>
+    <string name="order_status">Buyurtma holati</string>
+    <string name="order">Buyurtma</string>
+    <string name="order_status_sended">Yuborildi</string>
+    <string name="order_status_approved">Qabul qilindi</string>
+    <string name="order_status_declined">Bekor qilindi</string>
+    <string name="select_order">Qaytarish uchun buyurtmani tanlang</string>
+    <string name="confirm_return">Buyurtmani qaytarishni tasdiqlang. Buyurtma raqami №</string>
+    <string name="order_date">Buyurtma sanasi: </string>
+    <string name="not_available">Vaqtincha mavjud emas</string>
+    <string name="save_changes">O\'zgarishlarni saqlash</string>
+    <string name="cancel_order">Buyurtmani bekor qilish</string>
+    <string name="about_company">Kompaniya hgaqida</string>
+    <string name="change_language">Tilni o\'gartirish</string>
+    <string name="russian">Русский</string>
+    <string name="uzbek">O\'zbek</string>
+    <string name="info">Bu yerda sizning kompaniyangiz haqida ma\'lumot bolishi kerak.\nLekin afsus, u yoq)</string>
+    <string name="return_sent">Qaytarish xaqidagi arizangiz moderatorlarga yuborildi. \nMaxsus xodimimizni qo\'ng\'irog\'ini kuting.</string>
+    <string name="done">Tayor!</string>
+    <string name="title_activity_view_good">ScrollingActivity</string>
+
+</resources>

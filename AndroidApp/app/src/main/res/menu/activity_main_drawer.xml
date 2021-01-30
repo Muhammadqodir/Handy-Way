@@ -42,6 +42,10 @@
     <item android:title="@string/about">
         <menu>
             <item
+                android:id="@+id/nav_lang"
+                android:icon="@drawable/ic_icons8_geography"
+                android:title="@string/change_language" />
+            <item
                 android:id="@+id/nav_support"
                 android:icon="@drawable/ic_icons8_online_support_1"
                 android:title="@string/support" />

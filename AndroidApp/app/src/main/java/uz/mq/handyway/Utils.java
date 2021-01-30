@@ -5,11 +5,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.net.URLEncoder;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -82,6 +85,37 @@ public class Utils {
                     ((Activity) context).startActivity(intent);
                 }
 
+            }
+        });
+        bottomSheerDialog.setCancelable(true);
+        bottomSheerDialog.setContentView(parentView);
+        bottomSheerDialog.show();
+    }
+
+    public static void showLanguageDialog(final Context context, LayoutInflater inflater){
+        final BottomSheetDialog bottomSheerDialog = new BottomSheetDialog(context, R.style.SheetDialog);
+        View parentView = inflater.inflate(R.layout.change_language ,null);
+
+        ((TextView) parentView.findViewById(R.id.tvRUS)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Resources res = context.getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                android.content.res.Configuration conf = res.getConfiguration();
+                conf.setLocale(new Locale("RU".toLowerCase()));
+                res.updateConfiguration(conf, dm);
+                ((Activity) context).recreate();
+            }
+        });
+        ((TextView) parentView.findViewById(R.id.tvUZB)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Resources res = context.getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                android.content.res.Configuration conf = res.getConfiguration();
+                conf.setLocale(new Locale("UZ".toLowerCase()));
+                res.updateConfiguration(conf, dm);
+                ((Activity) context).recreate();
             }
         });
         bottomSheerDialog.setCancelable(true);
