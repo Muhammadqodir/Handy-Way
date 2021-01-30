@@ -8,39 +8,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import uz.mq.handyway.Adapters.CartAdapter;
 import uz.mq.handyway.Adapters.OrderAdapter;
-import uz.mq.handyway.Models.GoodsModel;
 import uz.mq.handyway.Models.OrderModel;
 
-public class OrdersActivity extends AppCompatActivity {
+public class ReturnActivity extends AppCompatActivity {
+
     Context context;
     HandyWayAPI api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orders);
+        setContentView(R.layout.activity_return);
         context = this;
         api = new HandyWayAPI(Utils.getUserToken(context));
         setActionBar();
         initViews();
     }
-
 
     RecyclerView recyclerView;
     OrderAdapter adapter;
@@ -57,7 +51,7 @@ public class OrdersActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final APIResponse response = api.getOrders();
+                final APIResponse response = api.getApprovedOrders();
                 if (response.getCode() > 0){
                     switch (response.getCode()){
                         case 1:
@@ -68,7 +62,21 @@ public class OrdersActivity extends AppCompatActivity {
                                     ArrayList<OrderModel> orderModels = (ArrayList<OrderModel>) response.getRes();
                                     if (orderModels.size() > 0){
                                         isEmpty(false);
-                                        adapter = new OrderAdapter(context, orderModels, false, null);
+                                        adapter = new OrderAdapter(context, orderModels, true, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getSupportActionBar().hide();
+                                                ((LinearLayout) findViewById(R.id.llSuccess)).setVisibility(View.VISIBLE);
+                                                ((Button) findViewById(R.id.btnBackToMain)).setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        startActivity(new Intent(context, MainActivity.class));
+                                                        ((Activity) context).finish();
+                                                        ((Activity) context).finishAffinity();
+                                                    }
+                                                });
+                                            }
+                                        });
                                         recyclerView.setAdapter(adapter);
                                     }else {
                                         isEmpty(true);
@@ -104,7 +112,7 @@ public class OrdersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_icons8_left_4));
-        setTitle(getResources().getString(R.string.orders));
+        setTitle(getResources().getString(R.string.select_order));
     }
 
     private void isLoading(boolean val){

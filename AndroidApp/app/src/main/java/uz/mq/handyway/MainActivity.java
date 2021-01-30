@@ -159,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_orders:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
+            case R.id.nav_return:
+                startActivity(new Intent(context, ReturnActivity.class));
+                break;
 
         }
         drawer.close();

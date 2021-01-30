@@ -146,6 +146,37 @@ public class HandyWayAPI {
         RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("token", token)
+                .addFormDataPart("approved", "false")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_orders.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            JSONArray list = json.getJSONArray("res");
+            ArrayList<OrderModel> models = new ArrayList<>();
+            for (int i=0; i<list.length(); i++){
+                JSONObject item = list.getJSONObject(i);
+
+                Type typeOfObjectsList = new TypeToken<ArrayList<CartModel>>() {}.getType();
+                ArrayList<CartModel> cartModels = new Gson().fromJson(item.getString("products"), typeOfObjectsList);
+                models.add(new OrderModel(item.getInt("id"), item.getInt("status"), item.getString("date"), cartModels, item.getBoolean("isEditable")));
+            }
+            return new APIResponse(json.getInt("code"), json.getString("message"), models);
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+    public APIResponse getApprovedOrders(){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("approved", "true")
                 .build();
         Request request = new Request.Builder()
                 .url(BASE_URL+"get_orders.php")
@@ -290,6 +321,28 @@ public class HandyWayAPI {
                 .build();
         Request request = new Request.Builder()
                 .url(BASE_URL+"new_order.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.getString("res"));
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), false);
+        }
+    }
+
+    public APIResponse returnOrder(int orderId){
+        Gson gson = new Gson();
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("order_id", orderId+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"return_order.php")
                 .post(body)
                 .build();
         try {

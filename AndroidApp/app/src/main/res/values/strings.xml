@@ -68,9 +68,13 @@
     <string name="order_status_sended">Отправлено</string>
     <string name="order_status_approved">Одобрено</string>
     <string name="order_status_declined">Отклонено</string>
+    <string name="select_order">Выберите заказ для возврата</string>
+    <string name="confirm_return">Вы точно хотите совершить возврат заказа №</string>
+    <string name="order_date">Дата заказа: </string>
     <string name="not_available">Нет в наличии</string>
     <string name="save_changes">Сохранить измемения</string>
     <string name="cancel_order">Отменить заказ</string>
+    <string name="return_sent">Ваш запрос на возврат успешно отправлено модераторам. \nЖдите звонка нашего сотрудника.</string>
     <string name="done">Готово!</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 

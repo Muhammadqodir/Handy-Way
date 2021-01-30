@@ -78,27 +78,27 @@ public class Utils {
         return preferences.getBoolean("isLogin", false);
     }
 
-    static void setLogin(Context ctx, boolean val){
+    public static void setLogin(Context ctx, boolean val){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         preferences.edit().putBoolean("isLogin", val).apply();
     }
 
-    static String getUserData(Context context, String name){
+    public static String getUserData(Context context, String name){
         SharedPreferences preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
         return preferences.getString(name, EMPTY);
     }
 
-    static void setUserData(Context context, String name, String tel){
+    public static void setUserData(Context context, String name, String tel){
         SharedPreferences preferences = context.getSharedPreferences("User", Context.MODE_PRIVATE);
         preferences.edit().putString("name", name).putString("tel", tel).apply();
     }
 
-    static void setUserToken(Context ctx, String token){
+    public static void setUserToken(Context ctx, String token){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         preferences.edit().putString("token", token).apply();
     }
 
-    static String getUserToken(Context ctx){
+    public static String getUserToken(Context ctx){
         SharedPreferences preferences = ctx.getSharedPreferences("User", Context.MODE_PRIVATE);
         return preferences.getString("token", EMPTY);
     }

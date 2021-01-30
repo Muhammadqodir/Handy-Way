@@ -126,8 +126,11 @@ function getGood($db, $good_id)
 	return $q_res;
 }
 
-function getOrders($db, $user_id){
+function getOrders($db, $user_id, $approved){
 	$sql = "SELECT * FROM `main_orders` WHERE `user_id_id` = $user_id ORDER BY `main_orders`.`date` DESC";
+	if ($approved == "true") {
+	$sql = "SELECT * FROM `main_orders` WHERE `user_id_id` = $user_id AND `status` = 1 ORDER BY `main_orders`.`date` DESC";
+	}
 	$q_res = $db->query($sql);
 	return $q_res;
 }
@@ -196,6 +199,12 @@ function getCategoryImages($db, $category_id, $limit)
 function newOrder($db, $date, $products, $user_id)
 {
 	$sql = "INSERT INTO `main_orders` (`id`, `date`, `products`, `status`, `user_id_id`) VALUES (NULL, '$date', '$products', '0', '$user_id');";
+	$q_res = $db->query($sql);
+}
+
+function returnOrder($db, $date, $products, $user_id)
+{
+	$sql = "INSERT INTO `main_returns` (`id`, `date`, `products`, `user_id_id`) VALUES (NULL, '$date', '$products', '$user_id');";
 	$q_res = $db->query($sql);
 }
 
