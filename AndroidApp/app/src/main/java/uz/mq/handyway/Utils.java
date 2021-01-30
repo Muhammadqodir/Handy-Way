@@ -1,6 +1,7 @@
 package uz.mq.handyway;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,50 @@ public class Utils {
         bottomSheerDialog.show();
     }
 
+
+    public static void showSupportDialog(final Context context, LayoutInflater inflater){
+        final BottomSheetDialog bottomSheerDialog = new BottomSheetDialog(context, R.style.SheetDialog);
+        View parentView = inflater.inflate(R.layout.tech_support ,null);
+
+        ((TextView) parentView.findViewById(R.id.tvTelegram)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSupportIntent(context);
+            }
+        });
+        ((TextView) parentView.findViewById(R.id.tvInstagram)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://instagram.com/_u/handy_way_");
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    ((Activity) context).startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    ((Activity) context).startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/handy_way_")));
+                }
+            }
+        });
+        ((TextView) parentView.findViewById(R.id.tvEmail)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, "support@handyway.uz");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "HandyWay APP");
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    ((Activity) context).startActivity(intent);
+                }
+
+            }
+        });
+        bottomSheerDialog.setCancelable(true);
+        bottomSheerDialog.setContentView(parentView);
+        bottomSheerDialog.show();
+    }
 
     public static void sendToDev(String message){
         try {

@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(context, CartActivity.class));
                 break;
             case R.id.nav_support:
-                Utils.startSupportIntent(context);
+                Utils.showSupportDialog(context, getLayoutInflater());
                 break;
             case R.id.nav_orders:
                 startActivity(new Intent(context, OrdersActivity.class));
