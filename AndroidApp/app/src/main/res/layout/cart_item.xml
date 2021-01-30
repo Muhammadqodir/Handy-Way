@@ -47,6 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:weightSum="3"
+                android:id="@+id/llEdit"
                 android:layout_marginTop="4dp"
                 android:layout_height="wrap_content">
 

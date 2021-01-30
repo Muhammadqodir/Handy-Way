@@ -5,10 +5,12 @@ import android.util.Log;
 import android.view.textclassifier.ConversationActions;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import okhttp3.FormBody;
@@ -17,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import uz.mq.handyway.Models.CartModel;
 import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.Models.GoodDetalis;
 import uz.mq.handyway.Models.GoodsModel;
@@ -157,7 +160,10 @@ public class HandyWayAPI {
             ArrayList<OrderModel> models = new ArrayList<>();
             for (int i=0; i<list.length(); i++){
                 JSONObject item = list.getJSONObject(i);
-                models.add(new OrderModel(item.getInt("id"), item.getInt("status"), item.getString("date"), item.getBoolean("isEditable")));
+
+                Type typeOfObjectsList = new TypeToken<ArrayList<CartModel>>() {}.getType();
+                ArrayList<CartModel> cartModels = new Gson().fromJson(item.getString("products"), typeOfObjectsList);
+                models.add(new OrderModel(item.getInt("id"), item.getInt("status"), item.getString("date"), cartModels, item.getBoolean("isEditable")));
             }
             return new APIResponse(json.getInt("code"), json.getString("message"), models);
         }catch (Exception e){
@@ -297,4 +303,28 @@ public class HandyWayAPI {
         }
     }
 
+    public APIResponse changeOrder(int orderId, String cart){
+        Gson gson = new Gson();
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("order_id", orderId+"")
+                .addFormDataPart("products", cart)
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"change_order.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            return new APIResponse(json.getInt("code"), json.getString("message"), json.getBoolean("res"));
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), false);
+        }
+    }
+
 }
+

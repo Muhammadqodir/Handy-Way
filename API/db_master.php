@@ -199,6 +199,18 @@ function newOrder($db, $date, $products, $user_id)
 	$q_res = $db->query($sql);
 }
 
+function changeOrder($db, $order_id, $products)
+{
+	$sql = "UPDATE `main_orders` SET `products` = '$products' WHERE `id` = $order_id";
+	$q_res = $db->query($sql);
+}
+
+function removeOrder($db, $order_id)
+{
+	$sql = "DELETE FROM `main_orders` WHERE `id` = $order_id";
+	$q_res = $db->query($sql);
+}
+
 function strtosql($str){
 	return str_replace("'", "\'", $str);
 }

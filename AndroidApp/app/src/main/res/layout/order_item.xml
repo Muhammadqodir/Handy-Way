@@ -49,7 +49,8 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="match_parent"
-                android:text="Отправлено"
+                android:text="@string/search"
+                android:textStyle="bold"
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:id="@+id/tvStatus"

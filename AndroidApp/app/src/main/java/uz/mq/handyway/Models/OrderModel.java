@@ -1,8 +1,11 @@
 package uz.mq.handyway.Models;
 
+import java.util.ArrayList;
+
 public class OrderModel {
     int id, status;
     String date;
+    ArrayList<CartModel> cartItems;
     boolean isEditable;
 
     public int getId() {
@@ -37,10 +40,19 @@ public class OrderModel {
         isEditable = editable;
     }
 
-    public OrderModel(int id, int status, String date, boolean isEditable) {
+    public ArrayList<CartModel> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(ArrayList<CartModel> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public OrderModel(int id, int status, String date, ArrayList<CartModel> cartItems, boolean isEditable) {
         this.id = id;
         this.status = status;
         this.date = date;
+        this.cartItems = cartItems;
         this.isEditable = isEditable;
     }
 }
