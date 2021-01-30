@@ -103,6 +103,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 if (quantity >= goodsModel.getMin_quantity()){
                     holder.tvQuantity.setText(quantity+"");
                     cartModels.get(position).setQuantity(quantity);
+                    cartModel.setQuantity(quantity);
+                    holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(goodsModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*goodsModel.getPrice())+" "+context.getResources().getString(R.string.summ));
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();
@@ -116,6 +118,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 if (quantity <= goodsModel.getMax_quantity()){
                     holder.tvQuantity.setText(quantity+"");
                     cartModels.get(position).setQuantity(quantity);
+                    holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(goodsModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*goodsModel.getPrice())+" "+context.getResources().getString(R.string.summ));
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+goodsModel.getMax_quantity(), Toast.LENGTH_SHORT).show();

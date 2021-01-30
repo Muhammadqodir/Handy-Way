@@ -27,6 +27,7 @@
         android:visibility="gone"
         android:drawableTop="@drawable/empty"
         android:textSize="18dp"
+        android:gravity="center"
         android:drawablePadding="12dp"
         android:text="@string/empty"
         android:textColor="#444"

@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:text="@string/phone"
             android:textSize="18dp"
+            android:maxLength="13"
             android:textColor="@color/coloWhite"
             android:layout_height="wrap_content"/>
         <EditText

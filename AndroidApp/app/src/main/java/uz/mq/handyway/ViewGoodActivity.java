@@ -3,16 +3,21 @@ package uz.mq.handyway;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.hardware.camera2.params.RecommendedStreamConfigurationMap;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -117,13 +122,35 @@ public class ViewGoodActivity extends AppCompatActivity {
                                     tvDesc.setText(goodDetalis.getDescription());
                                     tvTitle.setText(goodDetalis.getName());
                                     tvMethod.setText(goodDetalis.getPayment_method().replace("[", "").replace("]", "").replace("'" ,""));
-                                    tvInStock.setText(goodDetalis.getMax_q()+"");
-                                    tvQuantity.setText(goodDetalis.getMin_q()+"");
+                                    if (goodDetalis.getMax_q() > 0){
+                                        tvInStock.setText(goodDetalis.getMax_q()+"");
+                                        tvQuantity.setText(goodDetalis.getMin_q()+"");
+                                        btnMinus.setVisibility(View.VISIBLE);
+                                        btnPlus.setVisibility(View.VISIBLE);
+                                        btnBuy.setEnabled(true);
+                                    }else {
+                                        tvInStock.setText(R.string.not_available);
+                                        tvQuantity.setText(R.string.not_available);
+                                        btnMinus.setVisibility(View.GONE);
+                                        btnPlus.setVisibility(View.GONE);
+                                        btnBuy.setEnabled(false);
+                                    }
                                     goodId = goodDetalis.getId();
+                                    tvPrice.setText(Utils.convertPriceToString(goodDetalis.getPrice())+" "+getResources().getString(R.string.summ));
                                     minQuantity = goodDetalis.getMin_q();
                                     maxQuantity = goodDetalis.getMax_q();
                                     price = goodDetalis.getPrice();
-                                    Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+goodDetalis.getPic_url()).error(R.drawable.no_image).into(ivPic);
+                                    Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+goodDetalis.getPic_url()).error(R.drawable.no_image).into(ivPic, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            ivPic.setBackgroundColor(Color.parseColor("#ffffff"));
+                                        }
+
+                                        @Override
+                                        public void onError(Exception e) {
+
+                                        }
+                                    });
                                     isLoading(false);
                                 }
                             });
@@ -176,4 +203,11 @@ public class ViewGoodActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            ((Activity) context).finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

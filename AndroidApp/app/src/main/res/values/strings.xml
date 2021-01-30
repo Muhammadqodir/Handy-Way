@@ -33,7 +33,7 @@
 
     <string name="invalid_tel_pass">Неверный номар телефона или пароль</string>
     <string name="loading">Загрузка данных...</string>
-    <string name="empty">Нет данных!</string>
+    <string name="empty">Пусто!</string>
     <string name="confirm_exit">Подтвердите выход из профилья</string>
     <string name="confirm">Подтвердить</string>
     <string name="cancel">Отмена</string>
@@ -68,6 +68,7 @@
     <string name="order_status_sended">Отправлено</string>
     <string name="order_status_approved">Одобрено</string>
     <string name="order_status_declined">Отклонено</string>
+    <string name="not_available">Нет в наличии</string>
     <string name="title_activity_view_good">ScrollingActivity</string>
 
 </resources>

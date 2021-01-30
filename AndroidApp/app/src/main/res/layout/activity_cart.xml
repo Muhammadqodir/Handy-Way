@@ -26,6 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/tvEmpty"
         android:visibility="gone"
+        android:gravity="center"
         android:drawableTop="@drawable/empty"
         android:textSize="18dp"
         android:drawablePadding="12dp"

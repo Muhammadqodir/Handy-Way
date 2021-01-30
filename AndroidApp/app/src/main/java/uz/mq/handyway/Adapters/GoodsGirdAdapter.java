@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,11 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.zip.ZipFile;
 
 import uz.mq.handyway.CartUtils;
 import uz.mq.handyway.GoodsActivity;
@@ -67,43 +70,67 @@ public class GoodsGirdAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = layoutInflater.inflate(R.layout.goods_item, viewGroup, false);
+        final View root = layoutInflater.inflate(R.layout.goods_item, viewGroup, false);
         final GoodsModel item = models.get(i);
 
         final TextView tvQuantity = (TextView) root.findViewById(R.id.tvQuantity);
-        tvQuantity.setText(item.getMin_quantity()+"");
+        if (item.getMax_quantity() > 0){
+            tvQuantity.setTextColor(Color.parseColor("#444444"));
+            tvQuantity.setText(item.getMin_quantity()+"");
+            ((ImageView) root.findViewById(R.id.btnMinus)).setVisibility(View.VISIBLE);
+            ((ImageView) root.findViewById(R.id.btnPlus)).setVisibility(View.VISIBLE);
+            ((Button) root.findViewById(R.id.btnBuy)).setEnabled(true);
+            ((Button) root.findViewById(R.id.btnBuy)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()), item.getPrice());
+                }
+            });
+            ((ImageButton) root.findViewById(R.id.btnMinus)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int quantity = Integer.parseInt(tvQuantity.getText().toString()) - 1;
+                    if (quantity >= item.getMin_quantity()){
+                        tvQuantity.setText(quantity+"");
+                    }else {
+                        Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            ((ImageButton) root.findViewById(R.id.btnPlus)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int quantity = Integer.parseInt(tvQuantity.getText().toString()) + 1;
+                    if (quantity <= item.getMax_quantity()){
+                        tvQuantity.setText(quantity+"");
+                    }else {
+                        Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }else{
+            tvQuantity.setTextColor(context.getResources().getColor(R.color.colorDanger));
+            tvQuantity.setText(R.string.not_available);
+            ((Button) root.findViewById(R.id.btnBuy)).setEnabled(false);
+            ((ImageView) root.findViewById(R.id.btnMinus)).setVisibility(View.GONE);
+            ((ImageView) root.findViewById(R.id.btnPlus)).setVisibility(View.GONE);
+        }
 
         ((TextView) root.findViewById(R.id.tvTitle)).setText(item.getTitle());
+        ((ImageView) root.findViewById(R.id.ivPic)).setBackgroundColor(Color.parseColor("#00ffffff"));
         ((TextView) root.findViewById(R.id.tvPrice)).setText(Utils.convertPriceToString(item.getPrice())+" "+context.getResources().getString(R.string.summ));
-        Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+item.getPic_url()).error(R.drawable.no_image).into(((ImageView) root.findViewById(R.id.ivPic)));
-        ((ImageButton) root.findViewById(R.id.btnMinus)).setOnClickListener(new View.OnClickListener() {
+        Picasso.get().load(HandyWayAPI.BASE_URL_MEDIA+item.getPic_url()).error(R.drawable.no_image).into(((ImageView) root.findViewById(R.id.ivPic)), new Callback() {
             @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(tvQuantity.getText().toString()) - 1;
-                if (quantity >= item.getMin_quantity()){
-                    tvQuantity.setText(quantity+"");
-                }else {
-                    Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
-                }
+            public void onSuccess() {
+                ((ImageView) root.findViewById(R.id.ivPic)).setBackgroundColor(Color.parseColor("#ffffff"));
+            }
+
+            @Override
+            public void onError(Exception e) {
+
             }
         });
-        ((ImageButton) root.findViewById(R.id.btnPlus)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quantity = Integer.parseInt(tvQuantity.getText().toString()) + 1;
-                if (quantity <= item.getMax_quantity()){
-                    tvQuantity.setText(quantity+"");
-                }else {
-                    Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        ((Button) root.findViewById(R.id.btnBuy)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToCart(item.getId(), Integer.parseInt(tvQuantity.getText().toString()), item.getPrice());
-            }
-        });
+
         ((CardView) root.findViewById(R.id.cardParent)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
