@@ -1,4 +1,5 @@
 <?php
+  include 'create_image_utils.php';
    function resizeImage($filename, $width_, $height_)
    {
       $width = $width_;
@@ -20,7 +21,7 @@
       $red = imagecolorallocate($image_p, 255, 255, 255);
       imagefill($image_p, 0, 0, $red);
 
-      $image = imagecreatefromjpeg($filename); 
+      $image = imagecreatefromfile($filename); 
       
       imagecopyresampled($image_p, $image, 0, 0, 0, 0, 
               $width, $height, $width_orig, $height_orig); 

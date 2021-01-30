@@ -188,7 +188,7 @@ function newUserAuth($db, $token, $ip, $location, $date, $device, $user_id)
 
 function getCategoryImages($db, $category_id, $limit)
 {
-	$sql = "SELECT `photo` FROM `main_good` WHERE `category_id` = $category_id ORDER BY RAND() LIMIT $limit;";
+	$sql = "SELECT `photo` FROM `main_good` WHERE `category_id` = $category_id AND `photo` <> '' ORDER BY RAND() LIMIT $limit;";
 	$q_res = $q_res = $db->query($sql);
 	return $q_res;
 }
