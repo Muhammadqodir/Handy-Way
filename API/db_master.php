@@ -127,7 +127,7 @@ function getGood($db, $good_id)
 }
 
 function getOrders($db, $user_id){
-	$sql = "SELECT * FROM `main_orders` WHERE `user_id_id` = $user_id";
+	$sql = "SELECT * FROM `main_orders` WHERE `user_id_id` = $user_id ORDER BY `main_orders`.`date` DESC";
 	$q_res = $db->query($sql);
 	return $q_res;
 }
