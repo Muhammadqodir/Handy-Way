@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReturnActivity"></activity>
+        <activity android:name=".InfoActivity"></activity>
+        <activity android:name=".ReturnActivity" />
         <activity android:name=".OrderDetalisActivity" />
         <activity
             android:name=".SearchActivity"

@@ -74,6 +74,8 @@
     <string name="not_available">Нет в наличии</string>
     <string name="save_changes">Сохранить измемения</string>
     <string name="cancel_order">Отменить заказ</string>
+    <string name="about_company">О компании</string>
+    <string name="info">Здесь должна быть информация о вашем компании.\nНо увы, его тут нет)</string>
     <string name="return_sent">Ваш запрос на возврат успешно отправлено модераторам. \nЖдите звонка нашего сотрудника.</string>
     <string name="done">Готово!</string>
     <string name="title_activity_view_good">ScrollingActivity</string>

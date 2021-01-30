@@ -45,6 +45,10 @@
                 android:id="@+id/nav_support"
                 android:icon="@drawable/ic_icons8_online_support_1"
                 android:title="@string/support" />
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_icons8_info"
+                android:title="@string/about_company" />
 
         </menu>
     </item>
