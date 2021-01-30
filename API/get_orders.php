@@ -9,6 +9,11 @@ if ($user_id != "_invalid_token_") {
 	$q_res = getOrders($db, $user_id);
 	if ($q_res->num_rows > 0) {
 		while ($row = $q_res->fetch_assoc()) {
+			$row["isEditable"] = true;
+			$after_hour = strtotime($row["date"]) + 3600;
+			if ($after_hour<strtotime(date("d-m-Y h:i:s"))) {
+				$row["isEditable"] = false;
+			}
 			$orders[] = $row;
 		}
 	}
