@@ -6,7 +6,7 @@
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
 	$location = strtosql($details->country.", ".$details->city.", ".$details->region);
-	$date_time = date("d-m-Y h:i:s");
+	$date_time = date("d-m-Y H:i:s");
 	$res = array();
 	$db = init_db();
 	$user_id = chekUserAuth($db, $tel, $password);

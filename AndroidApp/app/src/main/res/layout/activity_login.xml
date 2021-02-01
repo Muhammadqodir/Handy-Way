@@ -29,14 +29,14 @@
             android:layout_width="match_parent"
             android:text="@string/phone"
             android:textSize="18dp"
-            android:maxLength="13"
             android:textColor="@color/coloWhite"
             android:layout_height="wrap_content"/>
         <EditText
             android:layout_width="match_parent"
             android:inputType="phone"
             android:textColor="@color/coloWhite"
-            android:text="+998999067374"
+            android:text=""
+            android:maxLength="13"
             android:id="@+id/etTel"
             android:layout_height="wrap_content"/>
         <TextView
@@ -49,7 +49,8 @@
         <EditText
             android:layout_width="match_parent"
             android:id="@+id/etPass"
-            android:text="218977"
+            android:text=""
+            android:maxLength="6"
             android:inputType="numberPassword"
             android:textColor="@color/coloWhite"
             android:layout_height="wrap_content"/>
