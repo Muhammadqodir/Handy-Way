@@ -28,6 +28,7 @@ import uz.mq.handyway.Models.ShopDetalis;
 
 public class HandyWayAPI {
     public static String BASE_URL = "https://handyway.uz/API/";
+    public static String URL = "https://handyway.uz/";
     public static String BASE_URL_MEDIA = "https://handyway.uz/media/";
     OkHttpClient client = new OkHttpClient();
     String token;

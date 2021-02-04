@@ -3,6 +3,7 @@ package uz.mq.handyway;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -150,8 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 startActivity(new Intent(context, ProfileActivity.class));
                 break;
-            case R.id.nav_info:
-                startActivity(new Intent(context, InfoActivity.class));
+            case R.id.nav_schedule:
+                String url = HandyWayAPI.URL+"schedule/";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
                 break;
             case R.id.nav_cart:
                 startActivity(new Intent(context, CartActivity.class));
