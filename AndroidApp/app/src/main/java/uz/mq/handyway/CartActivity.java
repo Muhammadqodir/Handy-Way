@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import okhttp3.internal.Util;
 import uz.mq.handyway.Adapters.CartAdapter;
 import uz.mq.handyway.Models.GoodsModel;
 
@@ -112,6 +113,7 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         fillList();
+
     }
 
     private void fillList(){
@@ -130,10 +132,16 @@ public class CartActivity extends AppCompatActivity {
                                     ArrayList<GoodsModel> goodsModels = (ArrayList<GoodsModel>) response.getRes();
                                     if (goodsModels.size() > 0){
                                         isEmpty(false);
+                                        ((TextView) findViewById(R.id.tvTotalPrice)).setText(getResources().getString(R.string.total) + " " + Utils.convertPriceToString(Utils.getTotalPrice(CartUtils.getCart(context)))+" "+getResources().getString(R.string.summ));
                                         adapter = new CartAdapter(context, CartUtils.getCart(context), goodsModels, new Runnable() {
                                             @Override
                                             public void run() {
                                                 isEmpty(true);
+                                            }
+                                        }, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ((TextView) findViewById(R.id.tvTotalPrice)).setText(getResources().getString(R.string.total) + " " + Utils.convertPriceToString(Utils.getTotalPrice(CartUtils.getCart(context)))+" "+getResources().getString(R.string.summ));
                                             }
                                         });
                                         recyclerView.setAdapter(adapter);
@@ -211,10 +219,10 @@ public class CartActivity extends AppCompatActivity {
     private void isEmpty(boolean val){
         if (val){
             ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.VISIBLE);
-            ((LinearLayout) findViewById(R.id.send_order)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.llBottomBar)).setVisibility(View.GONE);
         }else {
             ((TextView) findViewById(R.id.tvEmpty)).setVisibility(View.GONE);
-            ((LinearLayout) findViewById(R.id.send_order)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.llBottomBar)).setVisibility(View.VISIBLE);
         }
     }
 

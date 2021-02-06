@@ -12,7 +12,7 @@ if ($user_id != "_invalid_token_") {
 		while ($row = $q_res->fetch_assoc()) {
 			$row["isEditable"] = true;
 			$after_hour = strtotime($row["date"]) + 3600;
-			if ($after_hour<strtotime(date("d-m-Y h:i:s"))) {
+			if ($after_hour<strtotime(date("d-m-Y H:i:s"))) {
 				$row["isEditable"] = false;
 			}
 			$orders[] = $row;

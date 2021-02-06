@@ -21,10 +21,12 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import uz.mq.handyway.Models.CartModel;
 
 public class Utils {
 
@@ -141,6 +143,14 @@ public class Utils {
         }catch (Exception e){
             Log.e("sendToDev", e.getLocalizedMessage());
         }
+    }
+
+    public static int getTotalPrice(ArrayList<CartModel> models){
+        int totalPrice = 0;
+        for (int i = 0; i < models.size(); i++){
+            totalPrice += models.get(i).getPrice() * models.get(i).getQuantity();
+        }
+        return totalPrice;
     }
 
     public static int getListColor(int id){

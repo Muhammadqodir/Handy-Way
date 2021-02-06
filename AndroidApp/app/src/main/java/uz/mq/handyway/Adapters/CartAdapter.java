@@ -32,12 +32,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     ArrayList<CartModel> cartModels;
     ArrayList<GoodsModel> goodsModels;
     Runnable onEmpty;
+    Runnable changeTotalPrice;
 
-    public CartAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels, Runnable onEmpty) {
+    public CartAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels, Runnable onEmpty, Runnable changeTotalPrice) {
         this.context = context;
         this.cartModels = cartModels;
         this.goodsModels = goodsModels;
         this.onEmpty = onEmpty;
+        this.changeTotalPrice = changeTotalPrice;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
@@ -91,6 +93,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                                 CartUtils.removeItem(context, cartModel.getId());
                                 notifyItemRemoved(position);
                                 notifyItemRangeRemoved(position, cartModels.size());
+                                changeTotalPrice.run();
                             }
                         }).setNegativeButton(R.string.cancel, null)
                         .show();
@@ -106,6 +109,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     cartModel.setQuantity(quantity);
                     holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(goodsModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*goodsModel.getPrice())+" "+context.getResources().getString(R.string.summ));
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
+                    changeTotalPrice.run();
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();
                 }
@@ -120,6 +124,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     cartModels.get(position).setQuantity(quantity);
                     holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(goodsModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*goodsModel.getPrice())+" "+context.getResources().getString(R.string.summ));
                     CartUtils.changeItemQuanity(context, cartModel.getId(), quantity);
+                    changeTotalPrice.run();
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+goodsModel.getMax_quantity(), Toast.LENGTH_SHORT).show();
                 }
