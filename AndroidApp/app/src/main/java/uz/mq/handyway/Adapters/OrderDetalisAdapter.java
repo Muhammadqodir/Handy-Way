@@ -32,13 +32,15 @@ public class OrderDetalisAdapter extends RecyclerView.Adapter<OrderDetalisAdapte
     ArrayList<GoodsModel> goodsModels;
     boolean isEditable;
     Runnable onEmpty;
+    Runnable changeTotalPrice;
 
-    public OrderDetalisAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels, boolean isEditable, Runnable onEmpty) {
+    public OrderDetalisAdapter(Context context, ArrayList<CartModel> cartModels, ArrayList<GoodsModel> goodsModels, boolean isEditable, Runnable onEmpty, Runnable changeTotalPrice) {
         this.context = context;
         this.cartModels = cartModels;
         this.goodsModels = goodsModels;
         this.isEditable = isEditable;
         this.onEmpty = onEmpty;
+        this.changeTotalPrice = changeTotalPrice;
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
@@ -98,6 +100,7 @@ public class OrderDetalisAdapter extends RecyclerView.Adapter<OrderDetalisAdapte
                                 }
                                 notifyItemRemoved(position);
                                 notifyItemRangeRemoved(position, cartModels.size());
+                                changeTotalPrice.run();
                             }
                         }).setNegativeButton(R.string.cancel, null)
                         .show();
@@ -112,6 +115,7 @@ public class OrderDetalisAdapter extends RecyclerView.Adapter<OrderDetalisAdapte
                     cartModels.get(position).setQuantity(quantity);
                     cartModel.setQuantity(quantity);
                     holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(cartModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*cartModel.getPrice())+" "+context.getResources().getString(R.string.summ));
+                    changeTotalPrice.run();
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+goodsModel.getMin_quantity(), Toast.LENGTH_SHORT).show();
                 }
@@ -125,6 +129,7 @@ public class OrderDetalisAdapter extends RecyclerView.Adapter<OrderDetalisAdapte
                     holder.tvQuantity.setText(quantity+"");
                     cartModels.get(position).setQuantity(quantity);
                     holder.tvQuantityPrice.setText(cartModel.getQuantity()+" x "+ Utils.convertPriceToString(cartModel.getPrice())+"\n"+Utils.convertPriceToString(cartModel.getQuantity()*cartModel.getPrice())+" "+context.getResources().getString(R.string.summ));
+                    changeTotalPrice.run();
                 }else {
                     Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+goodsModel.getMax_quantity(), Toast.LENGTH_SHORT).show();
                 }

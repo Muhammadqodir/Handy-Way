@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:numColumns="1"
         android:listSelector="#00000000"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false"
         android:horizontalSpacing="0dp"
         android:verticalSpacing="0sp"
         android:layout_height="match_parent" />
@@ -56,34 +58,55 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:weightSum="4"
-        android:id="@+id/llActions"
+        android:orientation="vertical"
+        android:id="@+id/llBottomBar"
+        android:visibility="visible"
+        android:background="@color/coloWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="12dp"
+        <TextView
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/send_order"
             android:layout_marginTop="12dp"
-            android:padding="8dp"
-            android:id="@+id/btnSave"
-            android:text="@string/save_changes"
-            android:textColor="@color/coloWhite"
-            android:background="@drawable/btn_success"
-            android:layout_weight="3"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:id="@+id/tvTotalPrice"
+            android:textSize="18dp"
+            android:text="@string/total"
             android:layout_height="wrap_content"/>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/btnCancel"
-            android:src="@drawable/ic_icons8_cancel"
-            android:background="@drawable/btn_primary"
-            android:padding="12dp"
-            android:layout_margin="12dp"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="4"
+            android:id="@+id/llActions"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                android:id="@+id/btnSave"
+                android:text="@string/save_changes"
+                android:textColor="@color/coloWhite"
+                android:background="@drawable/btn_success"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/btnCancel"
+                android:src="@drawable/ic_icons8_cancel"
+                android:background="@drawable/btn_primary"
+                android:padding="12dp"
+                android:layout_margin="12dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

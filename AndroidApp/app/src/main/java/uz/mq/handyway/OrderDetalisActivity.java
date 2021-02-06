@@ -156,11 +156,16 @@ public class OrderDetalisActivity extends AppCompatActivity {
                                 public void run() {
                                     isLoading(false);
                                     ArrayList<GoodsModel> goodsModels = (ArrayList<GoodsModel>) response.getRes();
-
+                                    ((TextView) findViewById(R.id.tvTotalPrice)).setText(getResources().getString(R.string.total) + " " + Utils.convertPriceToString(Utils.getTotalPrice(orderModel.getCartItems()))+" "+getResources().getString(R.string.summ));
                                     adapter = new OrderDetalisAdapter(context, orderModel.getCartItems(), goodsModels, orderModel.isEditable(), new Runnable() {
                                         @Override
                                         public void run() {
                                             isEmpty(true);
+                                        }
+                                    }, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ((TextView) findViewById(R.id.tvTotalPrice)).setText(getResources().getString(R.string.total) + " " + Utils.convertPriceToString(Utils.getTotalPrice(adapter.getCartItems()))+" "+getResources().getString(R.string.summ));
                                         }
                                     });
                                     recyclerView.setAdapter(adapter);
