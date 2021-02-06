@@ -14,3 +14,4 @@
 .cxx
 API/sftp-config.json
 API/db_config.php
+AndroidApp/app/src/main/java/uz/mq/handyway/Config.java
