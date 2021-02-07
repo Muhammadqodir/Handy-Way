@@ -127,7 +127,7 @@ public class Utils {
 
     public static void sendToDev(String message){
         try {
-            final String url = "https://api.telegram.org/bot1564780465:AAEwDdi0gCb8Lk-Tl_Hm1Xh58reKWQK5kFU/sendMessage?chat_id=365867849&text="+ URLEncoder.encode(message, "utf-8");
+            final String url = "https://api.telegram.org/bot"+Config.APP_ERRORS_BOT+"/sendMessage?chat_id=365867849&text="+URLEncoder.encode(message, "utf-8");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
