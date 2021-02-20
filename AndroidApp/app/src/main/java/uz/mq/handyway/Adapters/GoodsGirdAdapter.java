@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -34,6 +36,7 @@ import uz.mq.handyway.GoodsActivity;
 import uz.mq.handyway.HandyWayAPI;
 import uz.mq.handyway.Models.CartModel;
 import uz.mq.handyway.Models.CategoryModel;
+import uz.mq.handyway.Models.GoodDetalis;
 import uz.mq.handyway.Models.GoodsModel;
 import uz.mq.handyway.R;
 import uz.mq.handyway.Utils;
@@ -44,6 +47,7 @@ public class GoodsGirdAdapter extends BaseAdapter {
     ArrayList<GoodsModel> models;
     View cartParent;
     TextView tvCart;
+    boolean longClick = false;
 
     public GoodsGirdAdapter(Context context, ArrayList<GoodsModel> models, View cartParent, TextView tvCart) {
         this.context = context;
@@ -104,8 +108,48 @@ public class GoodsGirdAdapter extends BaseAdapter {
                     if (quantity <= item.getMax_quantity()){
                         tvQuantity.setText(quantity+"");
                     }else {
-                        Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMax_quantity(), Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+
+            ((ImageButton) root.findViewById(R.id.btnPlus)).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    longClick = true;
+                    isPl = true;
+                    plmn(item, tvQuantity);
+                    return false;
+                }
+            });
+
+            ((ImageButton) root.findViewById(R.id.btnPlus)).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                        longClick = false;
+                    }
+                    return false;
+                }
+            });
+
+            ((ImageButton) root.findViewById(R.id.btnMinus)).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    longClick = true;
+                    isPl = false;
+                    plmn(item, tvQuantity);
+                    return false;
+                }
+            });
+
+            ((ImageButton) root.findViewById(R.id.btnMinus)).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                        longClick = false;
+                    }
+                    return false;
                 }
             });
         }else{
@@ -138,6 +182,45 @@ public class GoodsGirdAdapter extends BaseAdapter {
             }
         });
         return root;
+    }
+    public boolean isPl;
+    public void plmn(final GoodsModel item, final TextView tvQuantity){
+        if (longClick){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isPl){
+                                int quantity = Integer.parseInt(tvQuantity.getText().toString()) + 1;
+                                if (quantity <= item.getMax_quantity()){
+                                    tvQuantity.setText(quantity+"");
+                                }else {
+                                    Toast.makeText(context, context.getResources().getString(R.string.max_quanity)+": "+item.getMax_quantity(), Toast.LENGTH_SHORT).show();
+                                }
+                            }else {
+                                int quantity = Integer.parseInt(tvQuantity.getText().toString()) - 1;
+                                if (quantity >= item.getMin_quantity()){
+                                    tvQuantity.setText(quantity+"");
+                                }else {
+                                    Toast.makeText(context, context.getResources().getString(R.string.min_quanity)+": "+item.getMin_quantity(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    });
+                    SystemClock.sleep(100);
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            plmn(item, tvQuantity);
+                        }
+                    });
+                }
+            }).start();
+        }else {
+            return;
+        }
     }
 
     private void addToCart(int id, int quantity, int price){
