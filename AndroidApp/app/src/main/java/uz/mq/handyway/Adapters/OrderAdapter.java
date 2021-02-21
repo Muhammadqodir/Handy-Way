@@ -44,6 +44,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             {R.color.colorText,
                     R.color.colorSuccess,
                     R.color.colorDanger};
+    private String ms;
 
     public OrderAdapter(Context context, ArrayList<OrderModel> models, boolean isReturn, Runnable success) {
         this.context = context;
@@ -51,6 +52,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         this.isReturn = isReturn;
         this.success = success;
         gson = new Gson();
+        this.ms = "&update="+System.currentTimeMillis();
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
@@ -87,7 +89,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.tvDate.setText(model.getDate());
         holder.tvStatus.setText(ORDER_STATUS[model.getStatus()]);
         holder.tvStatus.setTextColor(context.getResources().getColor(ORDER_STATUS_COLORS[model.getStatus()]));
-        Picasso.get().load(HandyWayAPI.BASE_URL+"order_preview_master/get_preview.php?order_id="+model.getId()).error(R.drawable.no_image).into(holder.ivPreview);
+        Picasso.get().load(HandyWayAPI.BASE_URL+"order_preview_master/get_preview.php?order_id="+model.getId()+ms).error(R.drawable.no_image).into(holder.ivPreview);
         if (model.isEditable() && !isReturn){
             holder.btnEdit.setVisibility(View.VISIBLE);
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {

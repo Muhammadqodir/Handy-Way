@@ -205,7 +205,7 @@ function newOrder($db, $date, $products, $user_id)
 function isFirstOrder($db, $date, $user_id)
 {
 	$res = array();
-	$sql = "SELECT * FROM `main_orders` WHERE `date` LIKE '$date' AND 'user_id_id' = $user_id";
+	$sql = "SELECT * FROM `main_orders` WHERE `date` LIKE '%$date%' AND `user_id_id` = $user_id";
 	$q_res = $db->query($sql);
 	if ($q_res->num_rows > 0) {
 		$row = $q_res->fetch_assoc();
@@ -222,8 +222,8 @@ function addToExistOrder($db, $date, $order_id, $products)
 	$sql = "SELECT `products` FROM `main_orders` WHERE `id` = $order_id";
 	$q_res = $db->query($sql);
 	$e_products = json_decode($q_res->fetch_assoc()["products"], true);
-	$final_pr = array_merge($e_products, $products);
-	$sql = "UPDATE `main_orders` SET `products` = '$final_pr', 'date' = '$date'";
+	$final_pr = json_encode(array_merge($e_products, json_decode($products, true)));
+	$sql = "UPDATE `main_orders` SET `products` = '$final_pr', `date` = '$date' WHERE `id` = $order_id";
 	$q_res = $db->query($sql);
 }
 
