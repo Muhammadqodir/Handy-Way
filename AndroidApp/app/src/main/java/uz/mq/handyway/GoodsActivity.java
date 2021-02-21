@@ -22,7 +22,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import kotlin.random.AbstractPlatformRandom;
 import uz.mq.handyway.Adapters.GoodsGirdAdapter;
 import uz.mq.handyway.Models.GoodsModel;
 
@@ -120,7 +119,7 @@ public class GoodsActivity extends AppCompatActivity {
             }
         }).start();
     }
-    
+
     int curStep = 0;
     int selBrand = 0;
     public void goToStep(int step, int braidId){
@@ -157,7 +156,7 @@ public class GoodsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
-            goToStep(curStep-1);
+            goToStep(curStep-1, 0);
         }else if (item.getItemId() == R.id.action_search){
             startActivity(new Intent(context, SearchActivity.class).putExtra("category_id", category_id));
         }
@@ -166,7 +165,7 @@ public class GoodsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        goToStep(curStep-1);
+        goToStep(curStep-1, 0);
         super.onBackPressed();
     }
 
