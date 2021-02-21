@@ -64,7 +64,7 @@ public class GoodsActivity extends AppCompatActivity {
                 startActivity(new Intent(context, CartActivity.class));
             }
         });
-        fillData();
+        goToStep(0, 0);
     }
 
     private void setActionBar(){
@@ -74,12 +74,12 @@ public class GoodsActivity extends AppCompatActivity {
         setTitle(getIntent().getStringExtra("title"));
     }
 
-    private void fillData(){
+    private void getGoods(final int brandId){
         isLoading(true);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final APIResponse response = api.getGoods(category_id);
+                final APIResponse response = api.getGoodsByBrand(brandId);
                 if (response.getCode() > 0){
                     switch (response.getCode()){
                         case 1:
@@ -120,7 +120,7 @@ public class GoodsActivity extends AppCompatActivity {
             }
         }).start();
     }
-
+    
     int curStep = 0;
     int selBrand = 0;
     public void goToStep(int step, int braidId){
@@ -132,7 +132,7 @@ public class GoodsActivity extends AppCompatActivity {
 
                 break;
             case 1:
-
+                getGoods(braidId);
                 break;
         }
         curStep = step;
