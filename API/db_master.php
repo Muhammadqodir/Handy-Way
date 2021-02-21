@@ -202,6 +202,12 @@ function newOrder($db, $date, $products, $user_id)
 	$q_res = $db->query($sql);
 }
 
+function isFirstOrder($db, $date, $user_id)
+{
+	$sql = "SELECT * FROM `main_orders` WHERE `date` LIKE '$date' AND 'user_id_id' = $user_id";
+	$q_res = $db->query($sql);
+}
+
 function returnOrder($db, $date, $products, $user_id)
 {
 	$sql = "INSERT INTO `main_returns` (`id`, `date`, `products`, `user_id_id`) VALUES (NULL, '$date', '$products', '$user_id');";
