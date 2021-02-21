@@ -5,6 +5,7 @@ import org.json.JSONArray;
 public class BrandModel {
     int id;
     String title;
+    String logo;
     JSONArray categories;
 
     public int getId() {
@@ -31,9 +32,18 @@ public class BrandModel {
         this.categories = categories;
     }
 
-    public BrandModel(int id, String title, JSONArray categories) {
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public BrandModel(int id, String title, String logo, JSONArray categories) {
         this.id = id;
         this.title = title;
+        this.logo = logo;
         this.categories = categories;
     }
 }
