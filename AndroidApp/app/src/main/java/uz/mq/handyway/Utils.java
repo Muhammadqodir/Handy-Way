@@ -60,6 +60,14 @@ public class Utils {
                 startSupportIntent(context);
             }
         });
+        ((TextView) parentView.findViewById(R.id.tvCall)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_VIEW);
+                callIntent.setData(Uri.parse("tel:+998333342111"));
+                ((Activity) context).startActivity(callIntent);
+            }
+        });
         ((TextView) parentView.findViewById(R.id.tvInstagram)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
