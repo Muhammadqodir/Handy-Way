@@ -204,8 +204,17 @@ function newOrder($db, $date, $products, $user_id)
 
 function isFirstOrder($db, $date, $user_id)
 {
+	$res = array();
 	$sql = "SELECT * FROM `main_orders` WHERE `date` LIKE '$date' AND 'user_id_id' = $user_id";
 	$q_res = $db->query($sql);
+	if ($q_res->num_rows > 0) {
+		$row = $q_res->fetch_assoc();
+		$res["isFirst"] = false;
+		$res["id"] = $row["id"];
+	}else{
+		$res["isFirst"] = true;
+	}
+	return $res;
 }
 
 function returnOrder($db, $date, $products, $user_id)
