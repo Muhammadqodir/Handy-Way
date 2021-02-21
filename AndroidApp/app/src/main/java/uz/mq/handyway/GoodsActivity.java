@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.RelativeDateTimeFormatter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import okhttp3.internal.Util;
+import uz.mq.handyway.Adapters.BrandsAdapter;
 import uz.mq.handyway.Adapters.GoodsGirdAdapter;
+import uz.mq.handyway.Models.BrandModel;
 import uz.mq.handyway.Models.GoodsModel;
 
 public class GoodsActivity extends AppCompatActivity {
@@ -63,7 +67,7 @@ public class GoodsActivity extends AppCompatActivity {
                 startActivity(new Intent(context, CartActivity.class));
             }
         });
-        goToStep(0, 0);
+        getBrands();
     }
 
     private void setActionBar(){
@@ -90,7 +94,63 @@ public class GoodsActivity extends AppCompatActivity {
                                     if (models.size() > 0){
                                         isEmpty(false);
                                         adapter = new GoodsGirdAdapter(context, models, cartParent, tvCart);
+                                        girdView.setNumColumns(2);
                                         girdView.setAdapter(adapter);
+                                    }else{
+                                        isEmpty(true);
+                                    }
+                                }
+                            });
+                            break;
+                        case 2:
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.logOut(context);
+                                }
+                            });
+                            break;
+                    }
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isLoading(false);
+                            isEmpty(true);
+                            Utils.showErrorDialog(context, response.getMessage(), getLayoutInflater());
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    BrandsAdapter brandsAdapter;
+    private void getBrands(){
+        isLoading(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final APIResponse response = api.getBrands(category_id);
+                if (response.getCode() > 0){
+                    switch (response.getCode()){
+                        case 1:
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    isLoading(false);
+                                    ArrayList<BrandModel> models = (ArrayList<BrandModel>) response.getRes();
+                                    if (models.size() > 0){
+                                        isEmpty(false);
+                                        brandsAdapter = new BrandsAdapter(context, models, Utils.getListColor(category_id), new FillGoods(){
+                                            @Override
+                                            public void run() {
+                                                getGoods(this.brandId);
+                                                curStep = 1;
+                                            }
+                                        });
+                                        girdView.setNumColumns(1);
+                                        girdView.setAdapter(brandsAdapter);
                                     }else{
                                         isEmpty(true);
                                     }
@@ -122,16 +182,14 @@ public class GoodsActivity extends AppCompatActivity {
 
     int curStep = 0;
     int selBrand = 0;
-    public void goToStep(int step, int braidId){
+    public void goToStep(int step){
         switch (step){
             case -1:
                 ((Activity) context).finish();
                 break;
             case 0:
-
-                break;
-            case 1:
-                getGoods(braidId);
+                girdView.setNumColumns(1);
+                girdView.setAdapter(brandsAdapter);
                 break;
         }
         curStep = step;
@@ -156,7 +214,7 @@ public class GoodsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
-            goToStep(curStep-1, 0);
+            goToStep(curStep-1);
         }else if (item.getItemId() == R.id.action_search){
             startActivity(new Intent(context, SearchActivity.class).putExtra("category_id", category_id));
         }
@@ -165,8 +223,8 @@ public class GoodsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        goToStep(curStep-1, 0);
-        super.onBackPressed();
+        goToStep(curStep-1);
+        return;
     }
 
     @Override

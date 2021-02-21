@@ -136,7 +136,7 @@ public class HandyWayAPI {
             ArrayList<BrandModel> models = new ArrayList<>();
             for (int i=0; i<list.length(); i++){
                 JSONObject item = list.getJSONObject(i);
-                models.add(new BrandModel(item.getInt("id"), item.getString("name"), item.getString("logo"), item.getJSONArray("categories")));
+                models.add(new BrandModel(item.getInt("id"), item.getString("name"), item.getString("logo"), new JSONArray(item.getString("categories"))));
             }
             return new APIResponse(json.getInt("code"), json.getString("message"), models);
         }catch (Exception e){

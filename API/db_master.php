@@ -143,7 +143,7 @@ function getOrders($db, $user_id, $approved){
 }
 
 function getBrands($db, $category_id){
-	$sql = "SELECT * FROM `main_brand` WHERE `category_id` LIKE '%\'$category_id\'%'";
+	$sql = "SELECT * FROM `main_brand` WHERE `categories` LIKE '%\'$category_id\'%'";
 	$q_res = $db->query($sql);
 	return $q_res;
 }
