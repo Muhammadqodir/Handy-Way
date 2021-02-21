@@ -217,6 +217,16 @@ function isFirstOrder($db, $date, $user_id)
 	return $res;
 }
 
+function addToExistOrder($db, $date, $order_id, $products)
+{
+	$sql = "SELECT `products` FROM `main_orders` WHERE `id` = $order_id";
+	$q_res = $db->query($sql);
+	$e_products = json_decode($q_res->fetch_assoc()["products"], true);
+	$final_pr = array_merge($e_products, $products);
+	$sql = "UPDATE `main_orders` SET `products` = '$final_pr', 'date' = '$date'";
+	$q_res = $db->query($sql);
+}
+
 function returnOrder($db, $date, $products, $user_id)
 {
 	$sql = "INSERT INTO `main_returns` (`id`, `date`, `products`, `user_id_id`) VALUES (NULL, '$date', '$products', '$user_id');";
