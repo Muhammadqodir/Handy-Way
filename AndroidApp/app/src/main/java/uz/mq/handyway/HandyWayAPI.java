@@ -143,6 +143,33 @@ public class HandyWayAPI {
         }
     }
 
+    public APIResponse getGoodsByBrand(int brandId){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("brand_id", brandId+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_goods_by_brand.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            JSONArray list = json.getJSONArray("res");
+            ArrayList<GoodsModel> models = new ArrayList<>();
+            for (int i=0; i<list.length(); i++){
+                JSONObject item = list.getJSONObject(i);
+                models.add(new GoodsModel(item.getInt("id"), item.getString("name"), item.getInt("price"), item.getInt("min_quantity"), item.getInt("max_quantity"), item.getString("pic")));
+            }
+            return new APIResponse(json.getInt("code"), json.getString("message"), models);
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
     public APIResponse getOrders(){
         RequestBody body = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
