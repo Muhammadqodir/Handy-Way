@@ -10,6 +10,7 @@ if ($user_id != "_invalid_token_") {
 	$q_res = getBrands($db, $category_id);
 	if ($q_res->num_rows > 0) {
 		while ($row = $q_res->fetch_assoc()) {
+			$row["logo"] = "test";
 			$brands[] = $row;
 		}
 	}
