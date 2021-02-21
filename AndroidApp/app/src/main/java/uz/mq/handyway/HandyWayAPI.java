@@ -19,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import uz.mq.handyway.Models.BrandModel;
 import uz.mq.handyway.Models.CartModel;
 import uz.mq.handyway.Models.CategoryModel;
 import uz.mq.handyway.Models.GoodDetalis;
@@ -109,6 +110,33 @@ public class HandyWayAPI {
             for (int i=0; i<list.length(); i++){
                 JSONObject item = list.getJSONObject(i);
                 models.add(new CategoryModel(item.getInt("id"), item.getString("name")));
+            }
+            return new APIResponse(json.getInt("code"), json.getString("message"), models);
+        }catch (Exception e){
+            return new APIResponse(0, e.getMessage(), null);
+        }
+    }
+
+    public APIResponse getBrands(int categoryId){
+        RequestBody body = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("token", token)
+                .addFormDataPart("category_id", categoryId+"")
+                .build();
+        Request request = new Request.Builder()
+                .url(BASE_URL+"get_brands.php")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String r_body = response.body().string();
+            Log.i("ResponseBody", r_body);
+            JSONObject json = new JSONObject(r_body);
+            JSONArray list = json.getJSONArray("res");
+            ArrayList<BrandModel> models = new ArrayList<>();
+            for (int i=0; i<list.length(); i++){
+                JSONObject item = list.getJSONObject(i);
+                models.add(new BrandModel(item.getInt("id"), item.getString("name"), item.getJSONArray("categories")));
             }
             return new APIResponse(json.getInt("code"), json.getString("message"), models);
         }catch (Exception e){
