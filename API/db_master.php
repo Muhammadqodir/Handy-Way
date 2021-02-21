@@ -110,6 +110,13 @@ function getGoods($db, $category_id, $district)
 	return $q_res;
 }
 
+function getGoodsByBrand($db, $brand_id, $district)
+{
+	$sql = "SELECT * FROM `main_good` WHERE `brand_id` = $brand_id AND `distribution` LIKE '%\'$district\'%'";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function searchGoods($db, $category_id, $district, $q){
 	$sql = "SELECT * FROM `main_good` WHERE `name` LIKE '%$q%' AND `distribution` LIKE '%\'$district\'%'";
 	if ($category_id >= 0) {
