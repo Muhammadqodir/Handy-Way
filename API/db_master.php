@@ -148,6 +148,12 @@ function getBrands($db, $category_id){
 	return $q_res;
 }
 
+function getBrandImage($db, $brand_id){
+	$sql = "SELECT `photo` FROM `main_good` WHERE `brand_id` = $brand_id";
+	$q_res = $db->query($sql);
+	return $q_res;
+}
+
 function getGoodsByIds($db, $ids)
 {
 	$sql = "SELECT * FROM `main_good` WHERE";
